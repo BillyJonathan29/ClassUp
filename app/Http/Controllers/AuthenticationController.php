@@ -27,26 +27,12 @@ class AuthenticationController extends Controller
         if (auth()->attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('/');
+            return redirect()->intended('/dashboard');
         }
 
 
         return back()->withErrors([
             'email' => 'Email atau password salah'
         ])->onlyInput('email');
-    }
-
-
-    public function user()
-    {
-        return view('authentication.user', [
-            'title' => 'User',
-            'breadcrumbs' => [
-                [
-                    'title' => 'User',
-                    'link' => route('user')
-                ]
-            ]
-        ]);
     }
 }

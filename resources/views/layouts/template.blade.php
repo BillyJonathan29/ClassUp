@@ -78,7 +78,7 @@
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="blue">
                 <div class="avatar-sm lo">
-                    {{-- <img src="{{ url('img/adiva.png') }}" alt="navbar brand" class=" mt--4 mh"> --}}
+                    <img src="{{ url('img/default-avatar.jpg') }}" class=" mt--4 mh">
                 </div>
 
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
@@ -111,14 +111,13 @@
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"
                                 aria-expanded="false">
                                 <div class="avatar-sm">
-                                    {{-- <img src="{{ auth()->user()->avatarLink() }}" alt="..."
-										class="avatar-img rounded-circle"> --}}
+                                    <img src="{{ url('img/head-meja.png') }}" alt="..." class="avatar-img rounded-circl e">
                             </a>
                             <ul class="dropdown-menu dropdown-user animated fadeIn">
                                 <div class="dropdown-user-scroll scrollbar-outer">
                                     <li>
                                         <div class="user-box">
-                                            <div class="avatar-lg"><img src="" alt="..."
+                                            <div class="avatar-lg"><img src="{{ url('img/head-meja.png') }}" alt="..."
                                                     class="avatar-img rounded"></div>
                                             <div class="u-text">
                                                 <h4>{{ Auth::user()->name }}</h4>
@@ -130,7 +129,7 @@
                                     </li>
                                     <li>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="">Logout</a>
+                                        {{-- <a class="dropdown-item" href="{{ route('logout') }}">Logout</a> --}}
                                     </li>
                                 </div>
                             </ul>
@@ -153,7 +152,7 @@
                             <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
                                 <span>
                                     {{ Auth::user()->name }}
-									<span class="user-level">{{ Auth::user()->role }}</span>
+                                    <span class="user-level">{{ Auth::user()->role }}</span>
 
                                 </span>
                             </a>
@@ -207,7 +206,8 @@
                     <div class="copyright ml-auto">
                         <p class="social-text"> Copyright &copy; 2022 | <a href="https://adiva.co.id"
                                 target="_blank">
-                                Poject web imk </a> . All rights reserved. </p>
+                                PT.
+                                Adiva Sumber Solusi </a> . All rights reserved. </p>
                     </div>
                 </div>
             </footer>

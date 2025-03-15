@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login - Edukasi</title>
     <!-- CSS Files -->
-    <link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <style>
         .login-container {
             height: 100vh;
@@ -25,8 +26,10 @@
         }
 
         .login-left {
-            background: url('https://via.placeholder.com/450') no-repeat center;
+            background: url("{{ asset('img/head-meja.png') }}") no-repeat center;
             background-size: cover;
+            height: 100%;
+            min-height: 400px;
         }
     </style>
 </head>
@@ -34,8 +37,7 @@
 <body class="bg-light">
     <div class="container login-container">
         <div class="row login-box">
-            <div class="col-md-6 login-left d-none d-md-block">
-                <img src="{{ url('img/head-meja.png') }}" alt="">
+            <div class="col-md-6 login-left d-none d-md-block d-flex flex-column justify-content-center">
             </div>
             <div class="col-md-6 p-5">
                 <h3 class="text-center text mb-4">Form Login</h3>
@@ -57,7 +59,6 @@
             </div>
         </div>
     </div>
-    {{-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script> --}}
 </body>
 
 </html>

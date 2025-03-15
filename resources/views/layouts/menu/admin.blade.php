@@ -14,7 +14,7 @@
 <li class="nav-item">
     <a data-toggle="collapse" href="#base">
         <i class="fas fa-database"></i>
-        <p> Master Finansial </p>
+        <p> Master </p>
         <span class="caret"></span>
     </a>
     <div class="collapse" id="base">
@@ -22,7 +22,7 @@
             <li>
                 <a href="">
                     <i class="fas fa-donate"></i>
-                    <p> Kategori Pemasukan </p>
+                    <p> Data Kategori </p>
                 </a>
             </li>
         </ul>
@@ -30,7 +30,7 @@
 </li>
 
 <li class="nav-item">
-    <a href="">
+    <a href="{{  route('user') }}">
         <i class="fas fa-user"></i>
         <p> User </p>
     </a>
