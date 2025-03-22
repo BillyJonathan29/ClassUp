@@ -29,6 +29,7 @@ Route::redirect('/', 'login');
 
 Route::get('login', [AuthenticationController::class, 'index'])->name('login');
 Route::post('store', [AuthenticationController::class, 'authenticate'])->name('login.store');
+Route::get('logout', [AuthenticationController::class, 'logout'])->name('logout');
 
 Route::get('user', [UserController::class, 'index'])->name('user');
 Route::get('create', [UserController::class, 'create'])->name('user.create');

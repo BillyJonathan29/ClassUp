@@ -30,7 +30,7 @@
 </li>
 
 <li class="nav-item">
-    <a href="{{  route('user') }}">
+    <a href="{{ route('user') }}">
         <i class="fas fa-user"></i>
         <p> User </p>
     </a>
@@ -69,7 +69,7 @@
 
 
 <li class="nav-item">
-    <a href="">
+    <a href="{{ route('logout') }}">
         <i class="fas fa-sign-out-alt"></i>
         <p> Log out </p>
     </a>
