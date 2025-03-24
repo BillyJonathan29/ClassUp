@@ -27,6 +27,7 @@
 
         .login-left {
             background: url("{{ asset('img/head-meja.png') }}") no-repeat center;
+            background-color: blue;
             background-size: cover;
             height: 100%;
             min-height: 400px;
@@ -37,7 +38,7 @@
 <body class="bg-light">
     <div class="container login-container">
         <div class="row login-box">
-            <div class="col-md-6 login-left d-none d-md-block d-flex flex-column justify-content-center">
+            <div class="col-md-6 login-left bg-linear-120 d-none d-md-block d-flex flex-column justify-content-center">
             </div>
             <div class="col-md-6 p-5">
                 <h3 class="text-center text mb-4">Form Login</h3>

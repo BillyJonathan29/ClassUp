@@ -47,4 +47,18 @@ class AuthenticationController extends Controller
 
         return redirect('/login')->with('success', 'Anda berhasil logout');
     }
+
+
+    public function profile()
+    {
+        return view('setting.profile', [
+            'title'  => 'setting',
+            'breadcrumbs' => [
+                [
+                    'title' => 'profile',
+                    'link' => route('setting.profile')
+                ]
+            ]
+        ]);
+    }
 }

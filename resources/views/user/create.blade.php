@@ -13,7 +13,8 @@
                 </div>
 
                 <div class="card-body">
-                    <form action="" id="form">
+                    <form action="{{ route('user.store') }}" id="form" method="POST">
+                        @csrf
                         {!! App\MyClass\Template::requiredBanner() !!}
 
                         <div class="form-group">
