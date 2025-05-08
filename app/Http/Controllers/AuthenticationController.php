@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 // use Illuminate\Http\RedirectResponse;
+
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,7 +12,7 @@ class AuthenticationController extends Controller
 {
     public function index()
     {
-        return view('authentication.login');
+        return view('auth.login');
     }
 
     public function authenticate(Request $request)
@@ -51,8 +53,10 @@ class AuthenticationController extends Controller
 
     public function profile()
     {
+        $user = auth()->user();
         return view('setting.profile', [
             'title'  => 'setting',
+            'user' => $user,
             'breadcrumbs' => [
                 [
                     'title' => 'profile',

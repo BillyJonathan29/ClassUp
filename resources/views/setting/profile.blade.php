@@ -22,19 +22,19 @@
                         <div class="form-group">
                             <label for="" class="">Nama {!! App\MyClass\Template::required() !!}
                             </label>
-                            <input type="text" name="name" class="form-control" placeholder="Masukan Nama">
+                            <input type="text" name="name" class="form-control" placeholder="Masukan Nama" value="{{ $user->name }}">
                             <span class="invlaid-feedback"></span>
                         </div>
                         <div class="form-group">
                             <label for="" class="">Email {!! App\MyClass\Template::required() !!}
                             </label>
-                            <input type="text" name="email" class="form-control" placeholder="Masukan email anda">
+                            <input type="text" name="email" class="form-control" placeholder="Masukan email anda" value="{{ $user->email}}">
                             <span class="invlaid-feedback"></span>
                         </div>
                         <div class="form-group">
-                            <label for="" class="">Nomo Telepon {!! App\MyClass\Template::required() !!}
+                            <label for="" class="">Nomor Telepon {!! App\MyClass\Template::required() !!}
                             </label>
-                            <input type="number" name="phone_number" class="form-control" placeholder="Masukan nomor telepon anda">
+                            <input type="number" name="phone_number" class="form-control" placeholder="Masukan nomor telepon anda" value="{{ $user->phone_number}}">
                             <span class="invlaid-feedback"></span>
                         </div>
 

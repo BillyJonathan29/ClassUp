@@ -42,7 +42,7 @@
             </div>
             <div class="col-md-6 p-5">
                 <h3 class="text-center text mb-4">Form Login</h3>
-                <form action="{{ route('login.store') }}" method="POST">
+                <form action="{{ route('login.process') }}" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="email">Email</label>
