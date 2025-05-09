@@ -1,5 +1,5 @@
 <li class="nav-item">
-    <a href="">
+    <a href="{{ route('dashboard') }}">
         <i class="fas fa-home"></i>
         <p> Dashboard </p>
     </a>
@@ -52,13 +52,13 @@
     <div class="collapse" id="menu-setting">
         <ul class="nav nav-collapse">
             <li>
-                <a href="">
+                <a href="{{ route('setting.change_password') }}">
                     <i class="fas fa-key"></i>
                     <p> Ganti Password </p>
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="{{ route('setting.profile') }}">
                     <i class="fas fa-user-edit"></i>
                     <p> Profil </p>
                 </a>

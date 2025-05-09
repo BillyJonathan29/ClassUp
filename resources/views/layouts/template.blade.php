@@ -3,13 +3,14 @@
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title> ClasUp | Education </title>
+    <title> Saba | Kuningan </title>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="_token" content="{{ csrf_token() }}">
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
 
-    <link href="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.css" rel="stylesheet" integrity="sha384-2vMryTPZxTZDZ3GnMBDVQV8OtmoutdrfJxnDTg0bVam9mZhi7Zr3J1+lkVFRr71f" crossorigin="anonymous">
+    <link href="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.css" rel="stylesheet"
+        integrity="sha384-2vMryTPZxTZDZ3GnMBDVQV8OtmoutdrfJxnDTg0bVam9mZhi7Zr3J1+lkVFRr71f" crossorigin="anonymous">
 
 
     <script src="{{ url('js/plugin/webfont/webfont.min.js') }}"></script>
@@ -46,7 +47,22 @@
         .lo {
             margin: auto;
             position: absolute;
+            border-radius: 100%;
             margin-left: 50px;
+        }
+
+        .lo img {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        }
+
+        .head img {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
         }
 
         .mh {
@@ -119,7 +135,8 @@
                                                     alt="..." class="avatar-img rounded"></div>
                                             <div class="u-text">
                                                 <h4>{{ Auth::user()->name }}</h4>
-                                                <p class="text-muted">{{ Auth::user()->email }}</p><a href=""
+                                                <p class="text-muted">{{ Auth::user()->email }}</p>
+                                                <a href="{{ route('setting.profile') }}"
                                                     class="btn btn-xs btn-secondary btn-sm">Lihat
                                                     Profile</a>
                                             </div>
@@ -143,13 +160,13 @@
             <div class="sidebar-wrapper scrollbar scrollbar-inner">
                 <div class="sidebar-content">
                     <div class="user">
-                        <div class="avatar-sm float-left mr-3">
+                        <div class="avatar-sm float-left mr-4 head">
                             <img src="{{ url('img/head-meja.png') }}" alt="..." class="avatar-img rounded-circle">
                         </div>
                         <div class="info">
                             <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
                                 <span>
-                                    {{ Auth::user()->name }}
+                                    <span class="user-level">{{ Auth::user()->username }}</span>
                                     <span class="user-level">{{ Auth::user()->role }}</span>
                                 </span>
                             </a>
@@ -200,8 +217,7 @@
             <footer class="footer">
                 <div class="container-fluid">
                     <div class="copyright ml-auto">
-                        <p class="social-text"> Copyright &copy; 2025 | <a href=""
-                                target="_blank">
+                        <p class="social-text"> Copyright &copy; 2025 | <a href="" target="_blank">
                                 Saba Kuningan </a> . All rights reserved. </p>
                     </div>
                 </div>
@@ -232,11 +248,13 @@
 
 
 
-    <script src="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.js" integrity="sha384-2Ul6oqy3mEjM7dBJzKOck1Qb/mzlO+k/0BQv3D3C7u+Ri9+7OBINGa24AeOv5rgu" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.js"
+        integrity="sha384-2Ul6oqy3mEjM7dBJzKOck1Qb/mzlO+k/0BQv3D3C7u+Ri9+7OBINGa24AeOv5rgu" crossorigin="anonymous">
+    </script>
 
     <script src="{{ url('vendors/ladda/spin.min.js') }}"></script>
-	<script src="{{ url('vendors/ladda/ladda.min.js') }}"></script>
-	<script src="{{ url('vendors/ladda/ladda.jquery.min.js') }}"></script>
+    <script src="{{ url('vendors/ladda/ladda.min.js') }}"></script>
+    <script src="{{ url('vendors/ladda/ladda.jquery.min.js') }}"></script>
     <script src="{{ url('vendors/jquery-confirm/jquery-confirm.js') }}"></script>
 
 

@@ -2,6 +2,8 @@
 
 namespace App\MyClass;
 
+use App\Rules\ValidateUserPassword;
+
 class Validations
 {
 
@@ -71,7 +73,7 @@ class Validations
     public static function validateChangePassword($request, $userId)
     {
         $request->validate([
-            'password' => ['required', new \App\Rules\ValidateUserPassword($userId)],
+            'password' => ['required', new ValidateUserPassword($userId)],
             'new_password' => 'required',
             'confirm_password' => 'required|same:new_password',
         ], [
@@ -87,12 +89,13 @@ class Validations
         $request->validate([
             'name' => 'required',
             'email' => 'required|unique:users,email,' . $userId,
-            'phone_number' => 'required',
+            'role' => 'required|in:Admin, User',
         ], [
             'name.required' => 'Nama lengkap wajib diisi',
             'email.required' => 'Email wajib diisi',
             'email.unique' => 'Email sudah digunakan',
-            'phone_number.required' => 'Nomor telepon wajib diisi',
+            'role.required' => 'Role wajib diisi',
+            'role.in' => 'Role tidak valid',
         ]);
     }
 }

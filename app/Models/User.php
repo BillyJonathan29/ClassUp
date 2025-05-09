@@ -69,6 +69,11 @@ class User extends Authenticatable
         return $this->delete();
     }
 
+    public function comparePassword($password)
+    {
+        return Hash::check($password, $this->password);
+    }
+
     public static function dataTable($request)
     {
         $data = self::select(['users.*']);
