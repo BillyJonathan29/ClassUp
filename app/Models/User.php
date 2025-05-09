@@ -55,6 +55,20 @@ class User extends Authenticatable
         return $user;
     }
 
+    public function updateUser($request)
+    {
+        $this->update($request->except(['password']));
+        if (!empty($request->password)) {
+            $this->setPassword($request['password']);
+        }
+        return $this;
+    }
+
+    public function deleteUser()
+    {
+        return $this->delete();
+    }
+
     public static function dataTable($request)
     {
         $data = self::select(['users.*']);

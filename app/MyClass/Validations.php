@@ -37,36 +37,32 @@ class Validations
     public static function validateCreateUser($request)
     {
         $request->validate([
-            'name' => 'required',
+            'username' => 'required',
             'email' => 'required|unique:users,email',
             'password' => 'required',
-            'confirm_password' => 'required|same:password',
-            'role' => 'required|in:Staff,Owner',
+            // 'confirm_password' => 'required|same:password',
+            'role' => 'required|in:Admin,User',
         ], [
-            'name.required' => 'Nama wajib diisi',
-            'email.required' => 'Nama wajib diisi',
+            'username.required' => 'Username wajib diisi',
+            'email.required' => 'Email wajib diisi',
             'email.unique' => 'Email sudah digunakan',
             'password.required' => 'Password wajib diisi',
-            'confirm_password.required' => 'Wajib diisi',
-            'confirm_password.same' => 'Password yang dimasukkan tidak sama',
             'role.required' => 'Role wajib diisi',
             'role.in' => 'Role tidak valid',
         ]);
     }
 
-    public static function validateEditUser($request, $userId)
+    public static function validateUpdateUser($request, $userId)
     {
         $request->validate([
-            'name' => 'required',
+            'username' => 'required',
             'email' => 'required|unique:users,email,' . $userId,
             'password' => 'nullable',
-            'confirm_password' => 'nullable|same:password',
-            'role' => 'required|in:Staff,Owner',
+            'role' => 'required|in:Admin,User',
         ], [
-            'name.required' => 'Nama wajib diisi',
+            'username.required' => 'Nama wajib diisi',
             'email.required' => 'Nama wajib diisi',
             'email.unique' => 'Email sudah digunakan',
-            'confirm_password.same' => 'Password yang dimasukkan tidak sama',
             'role.required' => 'Role wajib diisi',
             'role.in' => 'Role tidak valid',
         ]);

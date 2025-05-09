@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\MyClass\Response;
+use App\MyClass\Validations;
 use Illuminate\Http\Request;
+use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -27,86 +31,74 @@ class UserController extends Controller
         ]);
     }
 
-
-    public function create()
-    {
-        return view('user.create');
-    }
-
-    public function update(Request $request, $id)
-    {
-        $user = User::find($id);
-
-        if (!$user) {
-            return response()->json([
-                'message' => 'User tidak di temukan'
-            ], 404);
-        }
-
-        $validated =  $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:5',
-            'role' => 'required|in:Admin,User',
-        ], [
-            'name.required' => 'Nama wajib di isi',
-            'email.required' => 'Nama wajib di isi',
-            'password.required' => 'Nama wajib di isi',
-            'role.required' => 'Nama wajib di isi'
-        ]);
-
-        $user->name = $validated['name'];
-        $user->email = $validated['email'];
-        $user->role = $validated['role'];
-
-        if (!empty($validated['password'])) {
-            $user->password = Hash::make($validated['password']);
-        }
-
-        $user->save();
-
-        return response()->json([
-            'message' => 'User berhasil diupdate',
-            'data' => $user
-        ]);
-    }
-
-
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|min:5',
-            'role' => 'required|in:Admin,User',
-        ], [
-            'name.required' => 'Nama wajib di isi',
-            'email.required' => 'Nama wajib di isi',
-            'password.required' => 'Nama wajib di isi',
-            'role.required' => 'Nama wajib di isi'
-        ]);
+        Validations::validateCreateUser($request);
+        DB::beginTransaction();
+        try {
+            $user = User::createUser($request->all());
+            $user->setPassword($request['password']);
+            DB::commit();
+            // dd($user);
 
-        $data = $request->all();
-        $data['password'] = Hash::make($data['password']);
-        $user = User::create($data);
-
-        return response()->json([
-            'message' => 'User berhasil ditambahkan',
-            'data' => $user
-        ], 201);
+            return Response::success([
+                'message' => 'User berhasil di tambahkan',
+                'data' => [
+                    'username' => $request->username,
+                    'email' => $request->email,
+                    'password' => $request->password,
+                    'role' => $request->role
+                ]
+            ]);
+        } catch (Exception $e) {
+            DB::rollback();
+            return Response::error($e);
+        }
     }
 
-
-    public function destroy($id)
+    public function edit(User $user)
     {
-        $user = User::find($id);
+        return view('user.edit', [
+            'title' => 'Edit user',
+            'user' => $user,
+            'breadcrumbs' => [
+                [
+                    'title' => 'User',
+                    'link' => route('user')
+                ],
+                [
+                    'title' => 'Edit user',
+                    'link' => route('user.create')
+                ]
+            ]
+        ]);
+    }
 
-        if (!$user) {
-            return response()->json(['message' => 'User tidak ditemukan'], 404);
+    public function update(Request $request, User $user)
+    {
+        Validations::validateUpdateUser($request, $user->id);
+        DB::beginTransaction();
+        try {
+            $user->updateUser($request);
+            DB::commit();
+
+            return Response::update();
+        } catch (Exception $e) {
+            DB::rollBack();
+            return Response::error($e);
         }
+    }
 
-        $user->delete();
-
-        return response()->json(['message' => 'User berhasil dihapus']);
+    public function destroy(User $user)
+    {
+        try {
+            DB::beginTransaction();
+            $user->deleteUser();
+            DB::commit();
+            return Response::delete();
+        } catch (Exception $e) {
+            DB::rollBack();
+            return Response::error($e);
+        }
     }
 }

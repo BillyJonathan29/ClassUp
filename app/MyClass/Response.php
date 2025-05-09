@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\MyClass;
 
@@ -19,7 +19,7 @@ class Response
 	public static function success($array = [])
 	{
 		if(!array_key_exists('message', $array)) {
-			$array['message'] = 'Berhasil';
+			$array['message'] = 'Data Berhasil di ';
 		}
 
 		return response()->json(array_merge($array, [

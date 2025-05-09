@@ -34,6 +34,8 @@
     <link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url('css/atlantis.min.css') }}">
     <link rel="stylesheet" href="{{ url('css/custom/app.css') }}">
+    <link rel="stylesheet" href="{{ url('vendors/ladda/ladda-themeless.min.css') }}">
+    <link rel="stylesheet" href="{{ url('vendors/jquery-confirm/jquery-confirm.css') }}">
 
 
 
@@ -233,6 +235,11 @@
 
 
     <script src="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.js" integrity="sha384-2Ul6oqy3mEjM7dBJzKOck1Qb/mzlO+k/0BQv3D3C7u+Ri9+7OBINGa24AeOv5rgu" crossorigin="anonymous"></script>
+
+    <script src="{{ url('vendors/ladda/spin.min.js') }}"></script>
+	<script src="{{ url('vendors/ladda/ladda.min.js') }}"></script>
+	<script src="{{ url('vendors/ladda/ladda.jquery.min.js') }}"></script>
+    <script src="{{ url('vendors/jquery-confirm/jquery-confirm.js') }}"></script>
 
 
 

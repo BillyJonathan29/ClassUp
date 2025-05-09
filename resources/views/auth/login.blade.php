@@ -45,8 +45,8 @@
                 <form action="{{ route('login.authenticate') }}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="username">Email</label>
-                        <input type="name" name="username" class="form-control" id="username"
+                        <label for="username">Username</label>
+                        <input type="text" name="username" class="form-control" id="username"
                             placeholder="Masukkan username">
                     </div>
                     <div class="form-group">

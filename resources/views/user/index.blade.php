@@ -82,10 +82,41 @@
                         searchable: false
                     }
                 ],
-                // drawCallback: settings => {
-                //     renderedEvent();
-                // }
+                drawCallback: settings => {
+                    deleteData();
+                }
             });
+            const reloadDT = () => {
+                $('#dataTable').DataTable().ajax.reload();
+            }
+
+            const deleteData = () => {
+                $.each($('.delete'), (i, deleteBtn) => {
+                    $(deleteBtn).off('click');
+                    $(deleteBtn).on('click', function() {
+                        let {
+                            deleteMessage,
+                            deleteHref
+                        } = $(this).data();
+                        confirmation(deleteMessage, function() {
+                            ajaxSetup();
+                            $.ajax({
+                                url: deleteHref,
+                                method: 'delete',
+                                dataType: 'json'
+                            }).done(response => {
+                                let {
+                                    message
+                                } = response;
+                                successNotification('Berhasil', message)
+                                reloadDT();
+                            }).fail(error => {
+                                ajaxErrorHandling(error);
+                            })
+                        })
+                    })
+                })
+            }
         });
     </script>
 @endsection
