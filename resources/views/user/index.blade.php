@@ -26,39 +26,17 @@
                             <thead>
                                 <tr>
                                     <th>NO</th>
-                                    <th>Nama</th>
+                                    <th>Username</th>
                                     <th>Email</th>
                                     <th>Role</th>
                                     <th width="100">Aksi</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                @foreach ($users as $key => $user)
-                                    <tr>
-                                        <td>{{ $key + 1 }}</td>
-                                        <td>{{ $user->name }}</td>
-                                        <td>{{ $user->email }}</td>
-                                        <td>{{ $user->role }}</td>
-                                        <td>
-                                            <a href="" class="btn btn-sm btn-warning">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            <form action="" method="POST" class="d-inline"
-                                                onsubmit="return confirm('Yakin ingin menghapus?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger">
-                                                    <i class="fa fa-trash"></i>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
+
                             <tfoot>
                                 <tr>
                                     <th>NO</th>
-                                    <th>Nama</th>
+                                    <th>Username</th>
                                     <th>Email</th>
                                     <th>Role</th>
                                     <th width="100">Aksi</th>
@@ -75,7 +53,39 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-            $('#dataTable').DataTable();
+            $('#dataTable').DataTable({
+                processing: true,
+                serverSide: true,
+                autoWidth: false,
+                ajax: {
+                    url: "{{ route('user') }}"
+                },
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'username',
+                        name: 'username'
+                    }, {
+                        data: 'email',
+                        name: 'email'
+                    }, {
+                        data: 'role',
+                        name: 'role'
+                    }, {
+                        data: 'action',
+                        name: 'action',
+                        orderable: false,
+                        searchable: false
+                    }
+                ],
+                // drawCallback: settings => {
+                //     renderedEvent();
+                // }
+            });
         });
     </script>
 @endsection

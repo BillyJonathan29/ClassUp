@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,12 +25,20 @@ Route::get('/dashboard', function () {
     return view('layouts.template');
 });
 
+Route::middleware('guest')->group(function () {
+    Route::redirect('/', 'login');
+    Route::get('login', [LoginController::class, 'index'])->name('login');
+    Route::post('login', [LoginController::class, 'authenticate'])->name('login.authenticate');
+    Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+});
 
-Route::redirect('/', 'login');
-
-Route::controller(AuthenticationController::class)->group(function () {
-    Route::get('login', 'index')->name('login');
-    Route::post('login', 'authenticate')->name('login.process');
-    Route::get('logout', 'logout')->name('logout');
-    Route::get('profile', 'profile')->name('setting.profile');
+Route::middleware('auth')->group(function () {
+    Route::prefix('user')->group(function () {
+        Route::get('/', [UserController::class, 'index'])->name('user');
+        Route::get('create', [UserController::class, 'create'])->name('user.create');
+        Route::post('store', [UserController::class, 'store'])->name('user.store');
+        Route::get('{user}/edit', [UserController::class, 'edit'])->name('user.edit');
+        Route::put('{user}/update', [UserController::class, 'update'])->name('user.update');
+        Route::delete('{user}/destroy', [UserController::class, 'destroy'])->name('user.destroy');
+    });
 });

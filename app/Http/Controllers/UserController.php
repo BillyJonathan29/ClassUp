@@ -5,28 +5,25 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // $users =  User::all();
 
-        // return view('user.user', [
-        //     'users' => $users,
-        //     'title' => 'User',
-        //     'breadcrumbs' => [[
-        //         'title' => 'User',
-        //         'link' => route('user')
-        //     ]]
+        if ($request->ajax()) {
+            return User::dataTable($request);
+        }
 
-        // ]);
-
-        $users = User::all();
-
-        return response()->json([
-            'message' => 'List User',
-            'users' => $users
+        return view('user.index', [
+            'title' => 'User',
+            'breadcrumbs' => [
+                [
+                    'title' => 'User',
+                    'link' => route('user')
+                ]
+            ]
         ]);
     }
 

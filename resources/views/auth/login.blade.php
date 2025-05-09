@@ -42,12 +42,12 @@
             </div>
             <div class="col-md-6 p-5">
                 <h3 class="text-center text mb-4">Form Login</h3>
-                <form action="{{ route('login.process') }}" method="POST">
+                <form action="{{ route('login.authenticate') }}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" class="form-control" id="email"
-                            placeholder="Masukkan email">
+                        <label for="username">Email</label>
+                        <input type="name" name="username" class="form-control" id="username"
+                            placeholder="Masukkan username">
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>

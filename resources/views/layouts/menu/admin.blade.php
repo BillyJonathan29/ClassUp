@@ -58,7 +58,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{ route('setting.profile') }}">
+                <a href="">
                     <i class="fas fa-user-edit"></i>
                     <p> Profil </p>
                 </a>
