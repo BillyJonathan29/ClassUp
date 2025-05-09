@@ -143,7 +143,7 @@
             <div class="sidebar-wrapper scrollbar scrollbar-inner">
                 <div class="sidebar-content">
                     <div class="user">
-                        <div class="avatar-sm float-left mr-2">
+                        <div class="avatar-sm float-left mr-3">
                             <img src="{{ url('img/head-meja.png') }}" alt="..." class="avatar-img rounded-circle">
                         </div>
                         <div class="info">
@@ -151,10 +151,8 @@
                                 <span>
                                     {{ Auth::user()->name }}
                                     <span class="user-level">{{ Auth::user()->role }}</span>
-
                                 </span>
                             </a>
-
                         </div>
                     </div>
                     <ul class="nav nav-primary" id="menu-nav">
@@ -202,9 +200,9 @@
             <footer class="footer">
                 <div class="container-fluid">
                     <div class="copyright ml-auto">
-                        <p class="social-text"> Copyright &copy; 2022 | <a href="https://adiva.co.id"
+                        <p class="social-text"> Copyright &copy; 2025 | <a href=""
                                 target="_blank">
-                                lassUp Education </a> . All rights reserved. </p>
+                                Saba Kuningan </a> . All rights reserved. </p>
                     </div>
                 </div>
             </footer>

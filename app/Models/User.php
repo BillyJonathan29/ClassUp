@@ -27,18 +27,18 @@ class User extends Authenticatable
         'role'
     ];
 
-    const ROLE_ADMIN = 'Admin';
-    const ROLE_USER = 'User';
+        // const ROLE_ADMIN = 'Admin';
+        // const ROLE_USER = 'User';
 
-    public function isAdmin()
-    {
-        return $this->role == self::ROLE_ADMIN;
-    }
+        // public function isAdmin()
+        // {
+        //     return $this->role == self::ROLE_ADMIN;
+        // }
 
-    public function isUser()
-    {
-        return $this->role == self::ROLE_USER;
-    }
+        // public function isUser()
+        // {
+        //     return $this->role == self::ROLE_USER;
+        // }
 
     public function setPassword($password)
     {

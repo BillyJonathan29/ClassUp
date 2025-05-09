@@ -1,5 +1,5 @@
-@if(auth()->user()->isAdmin())
+@if(auth()->user()->role == 'Admin')
 	@include('layouts.menu.admin')
-@elseif(auth()->user()->isUser())
+@elseif(auth()->user()->role == 'User')
 	@include('layouts.menu.user')
 @endif
