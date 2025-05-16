@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -24,21 +25,22 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
-        'role'
+        'role',
+        'avatar',
     ];
 
-        // const ROLE_ADMIN = 'Admin';
-        // const ROLE_USER = 'User';
+    // const ROLE_ADMIN = 'Admin';
+    // const ROLE_USER = 'User';
 
-        // public function isAdmin()
-        // {
-        //     return $this->role == self::ROLE_ADMIN;
-        // }
+    // public function isAdmin()
+    // {
+    //     return $this->role == self::ROLE_ADMIN;
+    // }
 
-        // public function isUser()
-        // {
-        //     return $this->role == self::ROLE_USER;
-        // }
+    // public function isUser()
+    // {
+    //     return $this->role == self::ROLE_USER;
+    // }
 
     public function setPassword($password)
     {
@@ -73,6 +75,61 @@ class User extends Authenticatable
     {
         return Hash::check($password, $this->password);
     }
+
+    // avatar
+    public function isHasAvatar()
+    {
+        if (empty($this->avatar)) return false;
+        return File::exists($this->avatarPath());
+    }
+
+    public function avatarPath()
+    {
+        return storage_path('app/public/avatars/' . $this->avatar);
+    }
+
+    public function avatarLink()
+    {
+        if ($this->isHasAvatar()) {
+            return url('storage/avatars/' . $this->avatar);
+        }
+
+        return url('img/default-avatar.jpg');
+    }
+
+    public function setAvatar($request)
+    {
+        if (!empty($request->upload_avatar)) {
+            $this->removeAvatar();
+            $file = $request->file('upload_avatar');
+            $filename = date('YmdHis_') . $file->getClientOriginalName();
+            $file->move(storage_path('app/public/avatars'), $filename);
+            $this->update([
+                'avatar' => $filename,
+            ]);
+        }
+
+        return $this;
+    }
+
+    public function removeAvatar()
+    {
+        if ($this->isHasAvatar()) {
+            File::delete($this->avatarPath());
+            $this->update([
+                'avatar' => null,
+            ]);
+        }
+
+        return $this;
+    }
+
+
+    public function tours()
+    {
+        return $this->hasMany(Tour::class, 'created_by');
+    }
+    // end avatar
 
     public static function dataTable($request)
     {

@@ -124,8 +124,9 @@
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"
                                 aria-expanded="false">
                                 <div class="avatar-sm">
-                                    <img src="{{ url('img/head-meja.png') }}" alt="..."
-                                        class="avatar-img rounded-circl e">
+                                    <img src="{{ auth()->user()->avatarLink() }}" alt="..."
+                                        class="avatar-img rounded-circle">
+                                </div>
                             </a>
                             <ul class="dropdown-menu dropdown-user animated fadeIn">
                                 <div class="dropdown-user-scroll scrollbar-outer">
@@ -161,7 +162,8 @@
                 <div class="sidebar-content">
                     <div class="user">
                         <div class="avatar-sm float-left mr-4 head">
-                            <img src="{{ url('img/head-meja.png') }}" alt="..." class="avatar-img rounded-circle">
+                            	<img src="{{ auth()->user()->avatarLink() }}" alt="..."
+										class="avatar-img rounded-circle">
                         </div>
                         <div class="info">
                             <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">

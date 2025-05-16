@@ -9,12 +9,12 @@
                 </div>
 
                 <div class="card-body">
-                    <form action="">
+                    <form action="" id="form">
 
                         {!! App\MyClass\Template::requiredBanner() !!}
 
                         <div class="text-center my-4">
-                            <img src="{{ url('img/head-meja.png') }}" width="100" id="change-avatar">
+                            <img src="{{ auth()->user()->avatarLink() }}" id="change-avatar">
                         </div>
 
                         <input type="file" name="upload_avatar" style="display: none;" accept="image/*">
@@ -58,10 +58,77 @@
 
 @section('scripts')
     <script>
-        const $form = $('#form');
-        const $submitBtn = $form.find(`[type="submit"]`);
+        $(function() {
 
-        // $form.find(`[name="role"]`).val(`{{ auth()->user()->role }}`);
+            const $modal = $('#modal');
+            const $form = $('#form');
+            const $formSubmitBtn = $form.find(`[type="submit"]`).ladda();
+
+            $form.find(`[name="name"]`).focus();
+
+            $form.on('submit', function(e) {
+                e.preventDefault();
+                clearInvalid();
+
+                let formData = new FormData(this);
+                $formSubmitBtn.ladda('start');
+
+                ajaxSetup();
+                $.ajax({
+                        url: `{{ route('setting.save_profile') }}`,
+                        method: 'POST',
+                        data: formData,
+                        dataType: 'json',
+                        contentType: false,
+                        processData: false
+                    })
+                    .done(response => {
+                        let {
+                            message
+                        } = response;
+                        successNotification('Berhasil', message)
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 1000)
+
+                        formReset();
+                    })
+                    .fail(error => {
+                        $formSubmitBtn.ladda('stop');
+                        ajaxErrorHandling(error, $form);
+                    })
+            })
+
+
+            $form.find('#change-avatar').on('click', function() {
+                $form.find(`[name="upload_avatar"]`).click()
+            })
+
+            $form.find('[name="upload_avatar"]').on('change', function() {
+                let file = $(this).val();
+
+                if (!isEmpty(file)) {
+                    let fileType = this.files[0].type;
+
+                    if (fileType.substring(0, 5) != "image") {
+                        toastrAlert();
+                        toastr.warning('File harus berupa foto', 'Peringatan')
+                        $(this).val('');
+                    } else {
+                        let reader = new FileReader();
+
+                        reader.onload = function(e) {
+                            $form.find('#change-avatar').attr('src', e.target.result);
+                        }
+                        reader.readAsDataURL(this.files[0]);
+                        $form.find('#change-avatar').show();
+                    }
+                } else {
+                    $form.find('#change-avatar').hide();
+                }
+            });
+
+        })
     </script>
 @endsection
 

@@ -20,9 +20,9 @@
     <div class="collapse" id="base">
         <ul class="nav nav-collapse">
             <li>
-                <a href="">
+                <a href="{{ route('tour') }}">
                     <i class="fas fa-donate"></i>
-                    <p> Data Kategori </p>
+                    <p> Data Wisata </p>
                 </a>
             </li>
         </ul>

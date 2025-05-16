@@ -47,7 +47,25 @@ class SettingController extends Controller
         }
     }
 
-    public function saveProfile() {}
+    public function saveProfile(Request $request)
+    {
+        Validations::validateProfileSave($request, auth()->user()->id);
+        DB::beginTransaction();
+        try {
+            auth()->user()->update($request->all());
+            auth()->user()->setAvatar($request);
+            DB::commit();
+
+            return Response::success(
+                [
+                    'message' => 'Data profile berhasil di ubah'
+                ]
+            );
+        } catch (Exception $e) {
+            DB::rollBack();
+            return Response::error($e);
+        }
+    }
 
     public function changePassword()
     {

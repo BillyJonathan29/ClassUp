@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SettingController;
+use App\Http\Controllers\TourController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,12 @@ Route::middleware('auth')->group(function () {
         Route::get('{user}/edit', [UserController::class, 'edit'])->name('user.edit');
         Route::put('{user}/update', [UserController::class, 'update'])->name('user.update');
         Route::delete('{user}/destroy', [UserController::class, 'destroy'])->name('user.destroy');
+    });
+
+    Route::prefix('tour')->group(function(){
+        Route::get('/', [TourController::class, 'index'])->name('tour');
+        Route::post('store', [TourController::class, 'store'])->name('tour.store');
+        Route::delete('{tour}/destroy', [TourController::class, 'destroy'])->name('tour.destroy');
     });
 
     Route::prefix('setting')->group(function () {
