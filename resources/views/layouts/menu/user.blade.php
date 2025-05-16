@@ -1,3 +1,5 @@
+<hr>
+
 <li class="nav-item">
     <a href="">
         <i class="fas fa-home"></i>
