@@ -112,7 +112,7 @@ class Validations
             'start_time' => 'required|date_format:H:i',
             'end_time' => 'required|date_format:H:i',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ] , [
+        ], [
             'name.required' => 'Nama wisata wajib diisi',
             'description.required' => 'Deskripsi wisata wajib diisi',
             'location.required' => 'Lokasi wisata wajib diisi',
@@ -126,6 +126,41 @@ class Validations
             'end_time.required' => 'Waktu selesai wisata wajib diisi',
             'end_time.date_format' => 'Format waktu selesai wisata tidak valid',
             'image.required' => 'Gambar wisata wajib diisi',
+            'image.image' => 'File yang diunggah harus berupa gambar',
+            'image.mimes' => 'Gambar harus berupa file dengan ekstensi jpeg, png, jpg, gif',
+            'image.max' => 'Ukuran gambar maksimal 2MB',
+        ]);
+    }
+
+
+
+    public static function validateUpdateTour($request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'location' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
+            'category' => 'required',
+            'price' => 'required|numeric',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'name.required' => 'Nama wisata wajib diisi',
+            'description.required' => 'Deskripsi wisata wajib diisi',
+            'location.required' => 'Lokasi wisata wajib diisi',
+            'latitude.required' => 'Latitude wisata wajib diisi',
+            'longitude.required' => 'Longitude wisata wajib diisi',
+            'category.required' => 'Kategori wisata wajib diisi',
+            'price.required' => 'Harga wisata wajib diisi',
+            'price.numeric' => 'Harga wisata harus berupa angka',
+            'start_time.required' => 'Waktu mulai wisata wajib diisi',
+            'start_time.date_format' => 'Format waktu mulai wisata tidak valid',
+            'end_time.required' => 'Waktu selesai wisata wajib diisi',
+            'end_time.date_format' => 'Format waktu selesai wisata tidak valid',
+            // 'image.required' => 'Gambar wisata wajib diisi',
             'image.image' => 'File yang diunggah harus berupa gambar',
             'image.mimes' => 'Gambar harus berupa file dengan ekstensi jpeg, png, jpg, gif',
             'image.max' => 'Ukuran gambar maksimal 2MB',

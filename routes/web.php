@@ -49,6 +49,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('tour')->group(function(){
         Route::get('/', [TourController::class, 'index'])->name('tour');
         Route::post('store', [TourController::class, 'store'])->name('tour.store');
+        Route::put('{tour}/update', [TourController::class, 'update'])->name('tour.update');
+        Route::get('{tour}/get', [TourController::class, 'get'])->name('tour.get');
         Route::delete('{tour}/destroy', [TourController::class, 'destroy'])->name('tour.destroy');
     });
 

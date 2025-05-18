@@ -46,4 +46,48 @@ class TourController extends Controller
             return Response::error($e);
         }
     }
+
+    public function get(Tour $tour)
+    {
+        try {
+            return Response::success([
+                'tour' => $tour
+            ]);
+        } catch (Exception $e) {
+            return Response::error($e);
+        }
+    }
+
+    public function update(Request $request, Tour $tour)
+    {
+        Validations::validateUpdateTour($request);
+        try {
+            DB::beginTransaction();
+            $tour->updateTour($request->except('image'));
+            $tour->saveFile($request);
+            DB::commit();
+            return Response::update([
+                'message' => 'Data wisata berhasil di update'
+            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return Response::error($e);
+        }
+    }
+
+    public function destroy(Tour $tour)
+    {
+        DB::beginTransaction();
+        try {
+            $tour->tourDestroy();
+            DB::commit();
+
+            return Response::delete([
+                'message' => 'Data wisata berhasil di hapus'
+            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return Response::error($e);
+        }
+    }
 }

@@ -20,8 +20,8 @@ return new class extends Migration
             $table->decimal('longitude', 11, 8);
             $table->string('category');
             $table->bigInteger('price');
-            $table->time('start_time');
-            $table->time('end_time');
+            $table->time('start_time')->nullable();
+            $table->time('end_time')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();
         });
