@@ -29,6 +29,15 @@ class User extends Authenticatable
         'avatar',
     ];
 
+    public function tours()
+    {
+        return $this->hasMany(Tour::class, 'created_by');
+    }
+
+    public function cultures()
+    {
+        return $this->hasMany(Culture::class, 'created_by');
+    }
     // const ROLE_ADMIN = 'Admin';
     // const ROLE_USER = 'User';
 
@@ -125,10 +134,7 @@ class User extends Authenticatable
     }
 
 
-    public function tours()
-    {
-        return $this->hasMany(Tour::class, 'created_by');
-    }
+
     // end avatar
 
     public static function dataTable($request)

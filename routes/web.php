@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\CultureController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SettingController;
@@ -46,12 +47,20 @@ Route::middleware('auth')->group(function () {
         Route::delete('{user}/destroy', [UserController::class, 'destroy'])->name('user.destroy');
     });
 
-    Route::prefix('tour')->group(function(){
+    Route::prefix('tour')->group(function () {
         Route::get('/', [TourController::class, 'index'])->name('tour');
         Route::post('store', [TourController::class, 'store'])->name('tour.store');
         Route::put('{tour}/update', [TourController::class, 'update'])->name('tour.update');
         Route::get('{tour}/get', [TourController::class, 'get'])->name('tour.get');
         Route::delete('{tour}/destroy', [TourController::class, 'destroy'])->name('tour.destroy');
+    });
+
+    Route::prefix('culture')->group(function () {
+        Route::get('/', [CultureController::class, 'index'])->name('culture');
+        Route::post('store', [CultureController::class, 'store'])->name('culture.store');
+        Route::put('{culture}/update', [CultureController::class, 'update'])->name('culture.update');
+        Route::get('{culture}/get', [CultureController::class, 'get'])->name('culture.get');
+        Route::delete('{culture}/destroy', [CultureController::class, 'destroy'])->name('culture.destroy');
     });
 
     Route::prefix('setting')->group(function () {

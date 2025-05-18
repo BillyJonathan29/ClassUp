@@ -26,7 +26,7 @@
                         <table class="table table-bordered" id="dataTable">
                             <thead>
                                 <tr>
-                                    <th> Nama </th>
+                                    <th> Nama Wisata </th>
                                     <th> Lokasi </th>
                                     <th> Latitude </th>
                                     <th> Longitude </th>
@@ -42,8 +42,7 @@
 
                             <tfoot>
                                 <tr>
-                                    <th> Nama </th>
-
+                                    <th> Nama Wisata </th>
                                     <th> Lokasi </th>
                                     <th> Latitude </th>
                                     <th> Longitude </th>
@@ -411,7 +410,8 @@
                             $formUpdate.find(`[name="price"]`).val(tour.price);
                             $formUpdate.find(`[name="start_time"]`).val(tour
                                 .start_time.substring(0, 5));
-                            $formUpdate.find(`[name="end_time"]`).val(tour.end_time.substring(0, 5));
+                            $formUpdate.find(`[name="end_time"]`).val(tour.end_time
+                                .substring(0, 5));
                             $formUpdate.find(`[name="description"]`).val(tour
                                 .description);
                             // $formUpdate.find(`[name="image"]`).attr('data-default-file',
