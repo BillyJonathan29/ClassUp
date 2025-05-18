@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
 use Laravel\Sanctum\HasApiTokens;
 
 class Culture extends Model
@@ -23,12 +24,46 @@ class Culture extends Model
         return self::create($request);
     }
 
+    public function updateCulture($request)
+    {
+        $this->update($request);
+        return $this;
+    }
+
+    public function destroyCulture()
+    {
+        $this->removeCulturePhoto();
+        return $this->delete();
+    }
+
+    public function cultureFilePath()
+    {
+        return storage_path('app/public/culture/'.$this->image);
+    }
+
+    public function isHasCulturePhoto()
+    {
+        if(empty($this->image)) return false;
+        return File::exists($this->cultureFilePath());
+    }
+
+    public function removeCulturePhoto()
+    {
+        if($this->isHasCulturePhoto()){
+            File::delete($this->cultureFilePath());
+            $this->update([
+                'image' => null
+            ]);
+        }
+    }
+
     public function saveFile($request)
     {
         if($request->hasFile('image')){
+            $this->removeCulturePhoto();
             $file = $request->file('image');
-            $fileName = date('YmdHis_').$file->getClientOriginalName();
-            $file->move(storage_path('app/storage/culture'), $fileName);
+            $fileName = time(). '.' . $file->getClientOriginalName();
+            $file->move(storage_path('app/public/culture'), $fileName);
             $this->update([
                 'image' => $fileName
             ]);

@@ -44,9 +44,48 @@ class CultureController extends Controller
         }
     }
 
-    public function get() {}
+    public function get(Culture $culture)
+    {
+        try {
+            return Response::success([
+                'culture' => $culture
+            ]);
+        } catch (Exception $e) {
+            // DB::rollBack();
+            return Response::error($e);
+        }
+    }
 
-    public function update(Request $request, Culture $culture) {}
+    public function update(Request $request, Culture $culture)
+    {
+        Validations::validateUpdateCulture($request);
+        DB::beginTransaction();
+        try {
+            $culture->updateCulture($request->except('image'));
+            $culture->saveFile($request);
+            DB::commit();
+            return Response::update([
+                'message' => 'Data budaya berhasil di update'
+            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return Response::error($e);
+        }
+    }
 
-    public function destroy() {}
+    public function destroy(Culture $culture)
+    {
+        DB::beginTransaction();
+        try {
+            $culture->destroyCulture();
+            DB::commit();
+
+            return Response::delete([
+                'message' => 'Data budaya berhasil di hapus'
+            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return Response::error($e);
+        }
+    }
 }
