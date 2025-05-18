@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\CultureController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SettingController;
@@ -52,6 +53,14 @@ Route::middleware('auth')->group(function () {
         Route::put('{tour}/update', [TourController::class, 'update'])->name('tour.update');
         Route::get('{tour}/get', [TourController::class, 'get'])->name('tour.get');
         Route::delete('{tour}/destroy', [TourController::class, 'destroy'])->name('tour.destroy');
+    });
+
+    Route::prefix('culture')->group(function(){
+        Route::get('/', [CultureController::class, 'index'])->name('culture');
+        Route::get('store', [CultureController::class, 'store'])->name('culture.store');
+        Route::get('{culture}/update', [CultureController::class, 'update'])->name('culture.update');
+        Route::get('{culture}/get', [CultureController::class, 'get'])->name('culture.get');
+        Route::get('{culture}/destroy', [CultureController::class, 'destroy'])->name('culture.destroy');
     });
 
     Route::prefix('setting')->group(function () {
