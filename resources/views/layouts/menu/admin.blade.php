@@ -1,5 +1,5 @@
 <li class="nav-item">
-    <a href="">
+    <a href="{{ route('dashboard') }}">
         <i class="fas fa-home"></i>
         <p> Dashboard </p>
     </a>
@@ -14,15 +14,15 @@
 <li class="nav-item">
     <a data-toggle="collapse" href="#base">
         <i class="fas fa-database"></i>
-        <p> Master Finansial </p>
+        <p> Master </p>
         <span class="caret"></span>
     </a>
     <div class="collapse" id="base">
         <ul class="nav nav-collapse">
             <li>
-                <a href="">
+                <a href="{{ route('tour') }}">
                     <i class="fas fa-donate"></i>
-                    <p> Kategori Pemasukan </p>
+                    <p> Data Wisata </p>
                 </a>
             </li>
         </ul>
@@ -30,7 +30,7 @@
 </li>
 
 <li class="nav-item">
-    <a href="">
+    <a href="{{ route('user') }}">
         <i class="fas fa-user"></i>
         <p> User </p>
     </a>
@@ -52,13 +52,13 @@
     <div class="collapse" id="menu-setting">
         <ul class="nav nav-collapse">
             <li>
-                <a href="">
+                <a href="{{ route('setting.change_password') }}">
                     <i class="fas fa-key"></i>
                     <p> Ganti Password </p>
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="{{ route('setting.profile') }}">
                     <i class="fas fa-user-edit"></i>
                     <p> Profil </p>
                 </a>
@@ -69,7 +69,7 @@
 
 
 <li class="nav-item">
-    <a href="">
+    <a href="{{ route('logout') }}">
         <i class="fas fa-sign-out-alt"></i>
         <p> Log out </p>
     </a>

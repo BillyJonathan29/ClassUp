@@ -6,6 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -17,24 +19,145 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    protected $table = 'users';
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
+        'role',
+        'avatar',
     ];
 
-    const ROLE_ADMIN = 'Admin';
-    const ROLE_USER = 'User';
+    // const ROLE_ADMIN = 'Admin';
+    // const ROLE_USER = 'User';
 
-    public function isAdmin()
+    // public function isAdmin()
+    // {
+    //     return $this->role == self::ROLE_ADMIN;
+    // }
+
+    // public function isUser()
+    // {
+    //     return $this->role == self::ROLE_USER;
+    // }
+
+    public function setPassword($password)
     {
-        return $this->role == self::ROLE_ADMIN;
+        $this->update([
+            'password' => Hash::make($password)
+        ]);
+        return $this;
     }
 
-    public function isUser()
+    public static function createUser($request)
     {
-        return $this->role == self::ROLE_USER;
+        $user = self::create($request);
+        $user->setPassword($request['password']);
+        return $user;
     }
+
+    public function updateUser($request)
+    {
+        $this->update($request->except(['password']));
+        if (!empty($request->password)) {
+            $this->setPassword($request['password']);
+        }
+        return $this;
+    }
+
+    public function deleteUser()
+    {
+        return $this->delete();
+    }
+
+    public function comparePassword($password)
+    {
+        return Hash::check($password, $this->password);
+    }
+
+    // avatar
+    public function isHasAvatar()
+    {
+        if (empty($this->avatar)) return false;
+        return File::exists($this->avatarPath());
+    }
+
+    public function avatarPath()
+    {
+        return storage_path('app/public/avatars/' . $this->avatar);
+    }
+
+    public function avatarLink()
+    {
+        if ($this->isHasAvatar()) {
+            return url('storage/avatars/' . $this->avatar);
+        }
+
+        return url('img/default-avatar.jpg');
+    }
+
+    public function setAvatar($request)
+    {
+        if (!empty($request->upload_avatar)) {
+            $this->removeAvatar();
+            $file = $request->file('upload_avatar');
+            $filename = date('YmdHis_') . $file->getClientOriginalName();
+            $file->move(storage_path('app/public/avatars'), $filename);
+            $this->update([
+                'avatar' => $filename,
+            ]);
+        }
+
+        return $this;
+    }
+
+    public function removeAvatar()
+    {
+        if ($this->isHasAvatar()) {
+            File::delete($this->avatarPath());
+            $this->update([
+                'avatar' => null,
+            ]);
+        }
+
+        return $this;
+    }
+
+
+    public function tours()
+    {
+        return $this->hasMany(Tour::class, 'created_by');
+    }
+    // end avatar
+
+    public static function dataTable($request)
+    {
+        $data = self::select(['users.*']);
+        return datatables()->eloquent($data)
+            ->addColumn('action', function ($data) {
+                $action = '
+					<div class="dropdown">
+						<button class="btn btn-primary px-2 py-1 dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Pilih Aksi
+						</button>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="' . route('user.edit', $data->id) . '">
+								<i class="fas fa-pencil-alt mr-1"></i> Edit
+							</a>
+							<a class="dropdown-item delete" href="javascript:void(0)" data-delete-message="Yakin ingin menghapus <strong>' . $data->name . '</strong>?" data-delete-href="' . route('user.destroy', $data->id) . '">
+								<i class="fas fa-trash mr-1"></i> Hapus
+							</a>
+						</div>
+					</div>';
+                return $action;
+            })
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);
+    }
+
+
 
 
     /**
