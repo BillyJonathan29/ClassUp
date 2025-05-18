@@ -21,12 +21,21 @@
         <ul class="nav nav-collapse">
             <li>
                 <a href="{{ route('tour') }}">
-                    <i class="fas fa-donate"></i>
+                    <i class="fas fa-map-marked-alt"></i>
                     <p> Data Wisata </p>
                 </a>
             </li>
+
+            <li>
+                <a href="{{ route('culture') }}">
+                    <i class="fas fa-theater-masks "></i>
+                    <p> Data Budaya </p>
+                </a>
+            </li>
         </ul>
+
     </div>
+
 </li>
 
 <li class="nav-item">
