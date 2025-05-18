@@ -183,4 +183,19 @@ class Validations
             'image.max' => 'Ukuran gambar maksimal 2MB',
         ]);
     }
+    public static function validateUpdateCulture($request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'name.required' => 'Nama wisata wajib diisi',
+            'description.required' => 'Deskripsi wisata wajib diisi',
+            // 'image.required' => 'Gambar budaya wajib diisi',
+            'image.image' => 'File yang diunggah harus berupa gambar',
+            'image.mimes' => 'Gambar harus berupa file dengan ekstensi jpeg, png, jpg, gif',
+            'image.max' => 'Ukuran gambar maksimal 2MB',
+        ]);
+    }
 }
