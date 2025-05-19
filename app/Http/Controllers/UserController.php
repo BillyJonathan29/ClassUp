@@ -56,6 +56,24 @@ class UserController extends Controller
         }
     }
 
+
+    public function create()
+    {
+        return view('user.create', [
+            'title' => 'Tambah User',
+            'breadcrumbs' => [
+                [
+                    'title' => 'User',
+                    'link' => route('user')
+                ],
+                [
+                    'title' => 'Tambah User',
+                    'link' => route('user.create')
+                ]
+            ]
+        ]);
+    }
+
     public function edit(User $user)
     {
         return view('user.edit', [

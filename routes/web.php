@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\CultureController;
 use App\Http\Controllers\DashboardController;
@@ -61,6 +62,14 @@ Route::middleware('auth')->group(function () {
         Route::put('{culture}/update', [CultureController::class, 'update'])->name('culture.update');
         Route::get('{culture}/get', [CultureController::class, 'get'])->name('culture.get');
         Route::delete('{culture}/destroy', [CultureController::class, 'destroy'])->name('culture.destroy');
+    });
+
+    Route::prefix('article')->group(function () {
+        Route::get('/', [ArticleController::class, 'index'])->name('article');
+        Route::post('store', [ArticleController::class, 'store'])->name('article.store');
+        Route::put('{article}/update', [ArticleController::class, 'update'])->name('article.update');
+        Route::get('{article}/get', [ArticleController::class, 'get'])->name('article.get');
+        Route::delete('{article}/destroy', [ArticleController::class, 'destroy'])->name('article.destroy');
     });
 
     Route::prefix('setting')->group(function () {
