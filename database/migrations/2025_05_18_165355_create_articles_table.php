@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->string('judul');
-            $table->text('isi');
-            $table->string('sumber');
-            $table->timestamp('tanggal');
+            $table->string('title');
+            $table->text('fill');
+            $table->string('source');
+            $table->date('date')->nullable();
             $table->string('image')->nullable();
             $table->timestamps();
         });

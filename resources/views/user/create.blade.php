@@ -1,7 +1,7 @@
 @extends('layouts.template')
 
 @section('content')
-    <div class="row m-4">
+    <div class="row ">
         <div class="col-lg-6 ">
             <div class="card">
                 <div class="card-header">
@@ -57,13 +57,13 @@
     <script>
         $(document).ready(function() {
             const $form = $('#form');
-            const $submitBtn = $form.find(`[type="submit"]`);
+            const $submitBtn = $form.find(`[type="submit"]`).ladda();
             $form.on('submit', function(e) {
                 e.preventDefault();
                 clearInvalid();
 
                 let formData = $(this).serialize();
-                // $submitBtn.ladda('start');
+                $submitBtn.ladda('start');
 
                 ajaxSetup();
                 $.ajax({
@@ -72,13 +72,14 @@
                         data: formData,
                         dataType: 'json'
                     }).done(response => {
-                        // $submitBtn
-                        ajaxSuccessHandling(response)
-                        resetForm()
-                        windowReload(500)
+                        $submitBtn.ladda('stop');
+                        ajaxSuccessHandling(response);
+                        resetForm();
+                        windowReload(500);
                         window.location.href = "{{ route('user') }}"
                     })
                     .fail(error => {
+                        $submitBtn.ladda('stop')
                         ajaxErrorHandling(error)
                     })
             })

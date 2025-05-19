@@ -68,16 +68,16 @@
 
                         <div class="form-group">
                             <label> Judul Berita {!! App\MyClass\Template::required() !!}</label>
-                            <input type="text" name="judul" class="form-control" placeholder="Judul berita">
+                            <input type="text" name="title" class="form-control" placeholder="Judul berita">
                         </div>
 
                         <div class="form-group">
                             <label> Sumber Berita {!! App\MyClass\Template::required() !!}</label>
-                            <input type="text" name="sumber" class="form-control" placeholder="Sumber berita">
+                            <input type="text" name="source" class="form-control" placeholder="Sumber berita">
                         </div>
                         <div class="form-group">
                             <label> Tanggal {!! App\MyClass\Template::required() !!}</label>
-                            <input type="date" name="tanggal" class="form-control" placeholder="Judul berita">
+                            <input type="date" name="date" class="form-control" placeholder="Judul berita">
                         </div>
 
                         <div class="form-group">
@@ -87,7 +87,7 @@
 
                         <div class="form-group">
                             <label> Isi {!! App\MyClass\Template::required() !!}</label>
-                            <textarea name="isi" class="form-control" placeholder="Isi deskripsi berita" rows="4"></textarea>
+                            <textarea name="fill" class="form-control" placeholder="Isi deskripsi berita" rows="4"></textarea>
                         </div>
                     </div>
 
@@ -107,20 +107,95 @@
 @endsection
 
 @section('scripts')
-<script>
-    $(document).ready(function(){
-        $('#dataTable').DataTable({
-            processing: true,
-            serverSide: true,
-            autoWidth: false,
-            ajax: {
-                `{{ route('article') }}`
-            },
-            columns: [{
-                data: 'judul',
-                name: 'judul'
-            }]
+    <script>
+        $(document).ready(function() {
+
+            const $modalCreate = $('#modalCreate');
+            const $formCreate = $('#formCreate');
+            const $formCreateSubmitBtn = $formCreate.find(`[type="submit"]`).ladda();
+
+            $('#dataTable').DataTable({
+                processing: true,
+                serverSide: true,
+                autoWidth: false,
+                ajax: {
+                    url: `{{ route('article') }}`,
+                },
+                columns: [{
+                    data: 'title',
+                    name: 'title'
+                }, {
+                    data: 'fill',
+                    name: 'fill',
+                }, {
+                    data: 'source',
+                    name: 'source'
+                }, {
+                    data: 'date',
+                    name: 'date'
+                }, {
+                    data: 'image',
+                    name: 'image'
+                }, {
+                    data: 'action',
+                    name: 'action',
+                    orderable: false,
+                    searchable: false
+                }]
+            })
+
+            const reloadDT = () => {
+                $('#dataTable').DataTable().ajax.reload();
+            }
+
+            const clearFormCreate = () => {
+                $formCreate[0].reset();
+            }
+            const formSubmit = ($modal, $form, $submit, $href, $method, addedAction = null) => {
+                $form.off('submit')
+                $form.on('submit', function(e) {
+                    e.preventDefault();
+                    clearInvalid();
+
+                    let formData = new FormData(this)
+                    $submit.ladda('start')
+
+                    ajaxSetup();
+                    $.ajax({
+                        url: $href,
+                        method: $method,
+                        data: formData,
+                        dataType: 'json',
+                        contentType: false,
+                        processData: false,
+                    }).done(response => {
+                        let {
+                            message
+                        } = response;
+                        successNotification('Berhasil', message);
+                        $submit.ladda('stop');
+                        $modal.modal('hide')
+                        reloadDT();
+                        $formCreate[0].reset();
+                        if (addedAction) {
+                            addedAction();
+                        }
+                    }).fail(error => {
+                        $submit.ladda('stop')
+                        ajaxErrorHandling(error, $form)
+                    });
+                })
+            }
+            formSubmit(
+                $modalCreate,
+                $formCreate,
+                $formCreateSubmitBtn,
+                `{{ route('article.store') }}`,
+                `post`,
+                () => {
+                    clearFormCreate();
+                }
+            )
         })
-    })
-</script>
+    </script>
 @endsection
