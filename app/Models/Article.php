@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
 use Laravel\Sanctum\HasApiTokens;
 
 class Article extends Model
@@ -28,9 +29,44 @@ class Article extends Model
         return self::create($request);
     }
 
+    public function articleUpdate($request)
+    {
+        $this->update($request);
+        return $this;
+    }
+
+    public function articleDestory()
+    {
+        $this->removeArticlePhoto();
+        return $this->delete();
+    }
+
+    public function articleFilePath()
+    {
+        return storage_path('app/public/article/' . $this->image);
+    }
+
+    public function isHasArticlePhoto()
+    {
+        if (empty($this->image)) return false;
+        return File::exists($this->articleFilePath());
+    }
+
+    public function removeArticlePhoto()
+    {
+        if ($this->isHasArticlePhoto()) {
+            File::delete($this->articleFilePath());
+            $this->update([
+                'image' => null
+            ]);
+        }
+        return $this;
+    }
+
     public function saveFile($request)
     {
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
+            $this->removeArticlePhoto();
             $file = $request->file('image');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
             $file->move(storage_path('app/public/article'), $fileName);

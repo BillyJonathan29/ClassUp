@@ -245,7 +245,6 @@
                                 reloadDT();
                             }).fail(error => {
                                 ajaxErrorHandling(error);
-
                             })
                         })
                     })
