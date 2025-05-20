@@ -219,4 +219,24 @@ class Validations
             'image.max' => 'Ukuran gambar maksimal 2MB',
         ]);
     }
+    public static function validateUpdateArticle($request)
+    {
+        $request->validate([
+            'title' => 'required',
+            'fill' => 'required',
+            'source' => 'required',
+            'date' => 'required|date',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'title.required' => 'Judul berita wajib diisi',
+            'fill.required' => 'Isi berita wajib diisi',
+            'source.required' => 'Sumber berita wajib diisi',
+            'date.required' => 'Tanggal berita wajib diisi',
+            'date.date_format' => 'Format tanggal berita tidak valid',
+            // 'image.required' => 'Gambar budaya wajib diisi',
+            'image.image' => 'File yang diunggah harus berupa gambar',
+            'image.mimes' => 'Gambar harus berupa file dengan ekstensi jpeg, png, jpg, gif',
+            'image.max' => 'Ukuran gambar maksimal 2MB',
+        ]);
+    }
 }
