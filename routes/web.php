@@ -6,6 +6,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CultureController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\TourController;
 use App\Http\Controllers\UserController;
@@ -73,12 +74,20 @@ Route::middleware('auth')->group(function () {
         Route::delete('{article}/destroy', [ArticleController::class, 'destroy'])->name('article.destroy');
     });
 
-    Route::prefix('company')->group(function(){
+    Route::prefix('company')->group(function () {
         Route::get('/', [CompanyController::class, 'index'])->name('company');
         Route::post('store', [CompanyController::class, 'store'])->name('company.store');
         Route::put('{company}/update', [CompanyController::class, 'update'])->name('company.update');
         Route::get('{company}/get', [CompanyController::class, 'get'])->name('company.get');
         Route::delete('{company}/destroy', [CompanyController::class, 'destroy'])->name('company.destroy');
+    });
+
+    Route::prefix('restaurant')->group(function () {
+        Route::get('/', [RestaurantController::class, 'index'])->name(('restaurant'));
+        Route::post('store', [RestaurantController::class, 'store'])->name(('restaurant.store'));
+        Route::put('{restaurant}/update', [RestaurantController::class, 'update'])->name(('restaurant.update'));
+        Route::get('{restaurant}/get', [RestaurantController::class, 'get'])->name(('restaurant.get'));
+        Route::delete('{restaurant}/destroy', [RestaurantController::class, 'destroy'])->name(('restaurant.destroy'));
     });
 
     Route::prefix('setting')->group(function () {
