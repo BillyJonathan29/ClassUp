@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-10">
+        <div class="col-lg-12">
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title">
@@ -113,14 +113,80 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modalUpdate" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form id="formUpdate" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fa fa-plus"></i> Update
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        {!! App\MyClass\Template::requiredBanner() !!}
+
+                        <div class="form-group">
+                            <label>Nama Bisnis {!! App\MyClass\Template::required() !!}</label>
+                            <input type="text" name="name" class="form-control" placeholder="Nama Bisnis">
+                        </div>
+                        <div class="form-group">
+                            <label> Kategori {!! App\MyClass\Template::required() !!}</label>
+                            <input type="text" name="category" class="form-control" placeholder="Kategori">
+                        </div>
+                        <div class="form-group">
+                            <label> Kontak {!! App\MyClass\Template::required() !!}</label>
+                            <input type="text" name="contact" class="form-control" placeholder="Masukan kontak">
+                        </div>
+                        <div class="form-group">
+                            <label>Latitude</label>
+                            <input type="text" name="latitude" class="form-control" placeholder="-6.20000000">
+                        </div>
+                        <div class="form-group">
+                            <label>Longitude</label>
+                            <input type="text" name="longitude" class="form-control" placeholder="106.81666667">
+                        </div>
+                        <div class="form-group">
+                            <label> Gambar {!! App\MyClass\Template::required() !!}</label>
+                            <input type="file" name="image" class="form-control" placeholder="Nama Bisnis">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Alamat {!! App\MyClass\Template::required() !!}</label>
+                            <textarea name="address" class="form-control" placeholder="Masukan alamat" rows="4"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            <i class="fas fa-times mr-1"></i> Tutup
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save mr-1"></i> Simpan
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('scripts')
     <script>
         $(document).ready(function() {
             const $modalCreate = $('#modalCreate');
+            const $modalUpdate = $('#modalUpdate');
             const $formCreate = $('#formCreate');
+            const $formUpdate = $('#formUpdate');
             const $formCreateSubmitBtn = $formCreate.find(`[type="submit"]`).ladda();
+            const $formUpdateSubmitBtn = $formUpdate.find(`[type="submit"]`).ladda();
 
             $('#dataTable').DataTable({
                 processing: true,
@@ -155,7 +221,10 @@
                     name: 'action',
                     orderable: false,
                     searchable: false
-                }]
+                }],
+                drawCallback: settings => {
+                    crud();
+                }
             });
 
             const clearFormCreate = () => {
@@ -164,6 +233,72 @@
 
             const reloadDT = () => {
                 $('#dataTable').DataTable().ajax.reload();
+            }
+
+            const crud = () => {
+                $.each($('.edit'), (i, editBtn) => {
+                    $(editBtn).off('click');
+                    $(editBtn).on('click', function() {
+                        let {
+                            editHref,
+                            getHref
+                        } = $(this).data();
+                        ajaxSetup();
+                        $.get({
+                            url: getHref,
+                            dataType: `json`
+                        }).done(response => {
+                            let {
+                                company
+                            } = response;
+                            clearInvalid();
+                            $modalUpdate.modal('show');
+                            $formUpdate.attr('action', editHref)
+                            $formUpdate.find(`[name="name"]`).val(company.name)
+                            $formUpdate.find(`[name="category"]`).val(company.category)
+                            $formUpdate.find(`[name="contact"]`).val(company.contact)
+                            $formUpdate.find(`[name="latitude"]`).val(company.latitude)
+                            $formUpdate.find(`[name="longitude"]`).val(company
+                                .longitude)
+                            $formUpdate.find(`[name="address"]`).val(company.address)
+                            // $formUpdate.find(`[name="name"]`).val(company)
+                            formSubmit(
+                                $modalUpdate,
+                                $formUpdate,
+                                $formUpdateSubmitBtn,
+                                editHref,
+                                `POST`
+                            );
+                        }).fail(error => {
+                            ajaxErrorHandling(error)
+                        });
+                    });
+                });
+                $.each($('.delete'), (i, deleteBtn) => {
+                    $(deleteBtn).off('click');
+                    $(deleteBtn).on('click', function() {
+                        let {
+                            deleteMessage,
+                            deleteHref
+                        } = $(this).data();
+                        confirmation(deleteMessage, function() {
+                            ajaxSetup();
+                            $.ajax({
+                                url: deleteHref,
+                                method: `delete`,
+                                dataType: `json`,
+                            }).done(response => {
+                                let {
+                                    message
+                                } = response;
+                                successNotification('Berhasil', message);
+                                reloadDT();
+                            }).fail(error => {
+                                ajaxErrorHandling(error);
+                            });
+                        });
+                    });
+                });
             }
 
             const formSubmit = ($modal, $form, $submit, $href, $method, addedAction = null) => {

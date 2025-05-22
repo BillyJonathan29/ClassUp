@@ -31,8 +31,8 @@ class CompanyController extends Controller
         Validations::validateCompany($request);
         DB::beginTransaction();
         try {
-            $companies = Company::createCompany($request->all());
-            $companies->saveFile($request);
+            $company = Company::createCompany($request->all());
+            $company->saveFile($request);
             DB::commit();
             return Response::success([
                 'message' => 'Data bisnis berhasil ditambahkan'
@@ -42,7 +42,46 @@ class CompanyController extends Controller
             return Response::error($e);
         }
     }
-    public function update(Company $company) {}
-    public function get(Company $company) {}
-    public function destroy(Company $company) {}
+    public function get(Company $company)
+    {
+        try {
+            return Response::success([
+                'company' => $company
+            ]);
+        } catch (Exception $e) {
+            return Response::error($e);
+        }
+    }
+
+    public function update(Request $request, Company $company)
+    {
+        Validations::validateUpdateCompany($request);
+        DB::beginTransaction();
+        try {
+            $company->companyUpdate($request->except('image'));
+            $company->saveFile($request);
+            DB::commit();
+            return Response::update([
+                'message' => 'Data bisnis berhasil diupdate'
+            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return Response::error($e);
+        }
+    }
+
+    public function destroy(Company $company)
+    {
+        DB::beginTransaction();
+        try {
+            $company->companyDestroy();
+            DB::commit();
+            return Response::delete([
+                'message' => 'Data bisnis berhasil dihapus'
+            ]);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return Response::error($e);
+        }
+    }
 }
