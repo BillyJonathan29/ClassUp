@@ -439,6 +439,7 @@
 
                     let formData = new FormData(this);
                     $submit.ladda('start');
+                    ajaxSetup();
                     $.ajax({
                         url: $href,
                         method: $method,

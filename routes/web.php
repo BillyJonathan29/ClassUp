@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CultureController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
@@ -70,6 +71,14 @@ Route::middleware('auth')->group(function () {
         Route::put('{article}/update', [ArticleController::class, 'update'])->name('article.update');
         Route::get('{article}/get', [ArticleController::class, 'get'])->name('article.get');
         Route::delete('{article}/destroy', [ArticleController::class, 'destroy'])->name('article.destroy');
+    });
+
+    Route::prefix('company')->group(function(){
+        Route::get('/', [CompanyController::class, 'index'])->name('company');
+        Route::post('store', [CompanyController::class, 'store'])->name('company.store');
+        Route::put('{company}/update', [CompanyController::class, 'update'])->name('company.update');
+        Route::get('{company}/get', [CompanyController::class, 'get'])->name('company.get');
+        Route::delete('{company}/destroy', [CompanyController::class, 'destroy'])->name('company.destroy');
     });
 
     Route::prefix('setting')->group(function () {
