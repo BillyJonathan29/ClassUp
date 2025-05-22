@@ -239,4 +239,29 @@ class Validations
             'image.max' => 'Ukuran gambar maksimal 2MB',
         ]);
     }
+
+    public static function validateCompany($request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'category' => 'required',
+            'contact' => 'required|numeric',
+            'latitude' => 'required',
+            'longitude' => 'required',
+            'address' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'name.required' => 'Nama perusahaan wajib diisi',
+            'category.required' => 'Kategori perusahaan wajib diisi',
+            'contact.required' => 'Kontak perusahaan wajib diisi',
+            'contact.numeric' => 'Kontak perusahaan harus berupa angka',
+            'latitude.required' => 'Latitude perusahaan wajib diisi',
+            'longitude.required' => 'Longitude perusahaan wajib diisi',
+            'address.required' => 'Alamat perusahaan wajib diisi',
+            'image.required' => 'Gambar perusahaan wajib diisi',
+            'image.image' => 'File yang diunggah harus berupa gambar',
+            'image.mimes' => 'Gambar harus berupa file dengan ekstensi jpeg, png, jpg, gif',
+            'image.max' => 'Ukuran gambar maksimal 2MB',
+        ]);
+    }
 }

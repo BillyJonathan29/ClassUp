@@ -38,6 +38,12 @@
                     <p> Data Berita </p>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('company') }}">
+                    <i class="fas fa-theater-masks "></i>
+                    <p> Data Bisnis </p>
+                </a>
+            </li>
         </ul>
 
     </div>
