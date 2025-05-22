@@ -44,6 +44,12 @@
                     <p> Data Bisnis </p>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('restaurant') }}">
+                    <i class="fas fa-theater-masks "></i>
+                    <p> Data Restoran </p>
+                </a>
+            </li>
         </ul>
 
     </div>

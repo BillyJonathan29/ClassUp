@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
 use Laravel\Sanctum\HasApiTokens;
 
 class Company extends Model
@@ -30,13 +31,44 @@ class Company extends Model
         $request['created_by'] = auth()->id();
         return self::create($request);
     }
+    public function companyUpdate($request)
+    {
+        $this->update($request);
+        return $this;
+    }
+    public function companyDestroy()
+    {
+        $this->removePhotoCompany();
+        return $this->delete();
+    }
+
+    public function companyFilePath()
+    {
+        return storage_path('app/public/company/' . $this->image);
+    }
+    public function isHasCompanyPhoto()
+    {
+        if (empty($this->image)) return false;
+        return File::exists($this->companyFilePath());
+    }
+
+    public function removePhotoCompany()
+    {
+        if ($this->isHasCompanyPhoto()) {
+            File::delete($this->companyFilePath());
+            $this->update([
+                'image' => null
+            ]);
+        }
+    }
 
     public function saveFile($request)
     {
         if ($request->hasFile('image')) {
+            $this->removePhotoCompany();
             $file = $request->file('image');
             $fileName = time() . '.' . $file->getClientOriginalName();
-            $file->move(storage_path('app/public/company'), $fileName);
+            $file->move(storage_path('app/public/company/'), $fileName);
             $this->update([
                 'image' => $fileName
             ]);
