@@ -46,6 +46,10 @@ class User extends Authenticatable
     public function companies(){
         return $this->hasMany(Company::class, 'created_by');
     }
+    public function restaurants()
+    {
+        return $this->hasMany(Restaurant::class, 'created_by');
+    }
     // const ROLE_ADMIN = 'Admin';
     // const ROLE_USER = 'User';
 

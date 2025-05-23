@@ -288,4 +288,69 @@ class Validations
             'image.max' => 'Ukuran gambar maksimal 2MB',
         ]);
     }
+
+    public static function validateRestaurant($request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'category' => 'required',
+            'contact' => 'required|numeric',
+            'latitude' => 'required',
+            'longitude' => 'required',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i',
+            'address' => 'required',
+            'description' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'name.required' => 'Nama restoran wajib diisi',
+            'category.required' => 'Kategori restoran wajib diisi',
+            'contact.required' => 'Kontak restoran wajib diisi',
+            'contact.numeric' => 'Kontak restoran harus berupa angka',
+            'latitude.required' => 'Latitude restoran wajib diisi',
+            'longitude.required' => 'Longitude restoran wajib diisi',
+            'start_time.required' => 'Jam buka restoran wajib diisi',
+            'start_time.date_format' => 'Format waktu mulai restoran tidak valid',
+            'end_time.required' => 'Jam tutup restoran wajib diisi',
+            'end_time.date_format' => 'Format waktu selesai restoran tidak valid',
+            'address.required' => 'Alamat restoran wajib diisi',
+            'description.required' => 'Deskripsi restoran wajib diisi',
+            'image.required' => 'Gambar restoran wajib diisi',
+            'image.image' => 'File yang diunggah harus berupa gambar',
+            'image.mimes' => 'Gambar harus berupa file dengan ekstensi jpeg, png, jpg, gif',
+            'image.max' => 'Ukuran gambar maksimal 2MB',
+        ]);
+    }
+    public static function validateUpdateRestaurant($request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'category' => 'required',
+            'contact' => 'required|numeric',
+            'latitude' => 'required',
+            'longitude' => 'required',
+            'start_time' => 'required|date_format:H:i',
+            'end_time' => 'required|date_format:H:i',
+            'address' => 'required',
+            'description' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'name.required' => 'Nama restoran wajib diisi',
+            'category.required' => 'Kategori restoran wajib diisi',
+            'contact.required' => 'Kontak restoran wajib diisi',
+            'contact.numeric' => 'Kontak restoran harus berupa angka',
+            'latitude.required' => 'Latitude restoran wajib diisi',
+            'longitude.required' => 'Longitude restoran wajib diisi',
+            'start_time.required' => 'Jam buka restoran wajib diisi',
+            'start_time.date_format' => 'Format waktu mulai restoran tidak valid',
+            'end_time.required' => 'Jam tutup restoran wajib diisi',
+            'end_time.date_format' => 'Format waktu selesai restoran tidak valid',
+            'address.required' => 'Alamat restoran wajib diisi',
+            'description.required' => 'Deskripsi restoran wajib diisi',
+            // 'image.required' => 'Gambar restoran wajib diisi',
+            'image.image' => 'File yang diunggah harus berupa gambar',
+            'image.mimes' => 'Gambar harus berupa file dengan ekstensi jpeg, png, jpg, gif',
+            'image.max' => 'Ukuran gambar maksimal 2MB',
+        ]);
+    }
 }
