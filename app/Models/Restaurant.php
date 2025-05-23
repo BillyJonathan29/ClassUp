@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
 use Laravel\Sanctum\HasApiTokens;
 
 class Restaurant extends Model
@@ -22,6 +23,60 @@ class Restaurant extends Model
         'description',
         'image'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public static function createRestaurant($request)
+    {
+        $request['created_by'] = auth()->id();
+        return self::create($request);
+    }
+
+    public function updateRestaurant($request)
+    {
+        $this->update($request);
+        return $this;
+    }
+    public function destroyRestaurant()
+    {
+        $this->removeRestaurant();
+        return $this->delete();
+    }
+
+    public function restaurantFilePath()
+    {
+        return storage_path('app/public/restaurant/' . $this->image);
+    }
+    public function isHasRestaurant()
+    {
+        if (empty($this->image)) return false;
+        return File::exists($this->restaurantFilePath());
+    }
+    public function removeRestaurant()
+    {
+        if ($this->isHasRestaurant()) {
+            File::delete($this->restaurantFilePath());
+            $this->update([
+                'image' => null
+            ]);
+        }
+    }
+    public function saveFile($request)
+    {
+        if ($request->hasFile('image')) {
+            $this->removeRestaurant();
+            $file = $request->file('image');
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(storage_path('app/public/restaurant/'), $fileName);
+            $this->update([
+                'image' => $fileName
+            ]);
+        }
+        return $this;
+    }
 
 
     public static function dataTable($request)

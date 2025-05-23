@@ -361,7 +361,7 @@
             const crud = () => {
                 $.each($('.delete'), (i, deleteBtn) => {
                     $(deleteBtn).off('click');
-                    $(deleteBtn).on('click', function(e) {
+                    $(deleteBtn).on('click', function() {
                         let {
                             deleteMessage,
                             deleteHref
