@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CultureController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JobVacancyController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\SettingController;
@@ -88,6 +89,15 @@ Route::middleware('auth')->group(function () {
         Route::put('{restaurant}/update', [RestaurantController::class, 'update'])->name(('restaurant.update'));
         Route::get('{restaurant}/get', [RestaurantController::class, 'get'])->name(('restaurant.get'));
         Route::delete('{restaurant}/destroy', [RestaurantController::class, 'destroy'])->name(('restaurant.destroy'));
+    });
+
+    Route::prefix('job-vacancy')->group(function () {
+        Route::get('/', [JobVacancyController::class, 'index'])->name('job-vacancy');
+        Route::get('create', [JobVacancyController::class, 'create'])->name('job-vacancy.create');
+        Route::post('store', [JobVacancyController::class, 'store'])->name('job-vacancy.store');
+        Route::get('{jobVacancy}/edit', [JobVacancyController::class, 'edit'])->name('job-vacancy.edit');
+        Route::put('{jobVacancy}/update', [JobVacancyController::class, 'update'])->name('job-vacancy.update');
+        Route::delete('{jobVacancy}/destroy', [JobVacancyController::class, 'destroy'])->name('job-vacancy.destroy');
     });
 
     Route::prefix('setting')->group(function () {

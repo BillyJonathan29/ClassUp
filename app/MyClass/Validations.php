@@ -353,4 +353,69 @@ class Validations
             'image.max' => 'Ukuran gambar maksimal 2MB',
         ]);
     }
+
+    public static function validateJobVacancy($request)
+    {
+        $request->validate([
+            'position' => 'required',
+            'company' => 'required',
+            'location' => 'required',
+            'job_type' => 'required|in:Full-Time,Part-Time,Freelance,Internship',
+            'description' => 'required',
+            'qualifications' => 'required',
+            'salary_min' => 'nullable|numeric|min:0',
+            'salary_max' => 'nullable|numeric|gte:salary_min',
+            'application_deadline' => 'required|date',
+            'contact' => 'required',
+            'application_url' => 'nullable|url',
+        ], [
+            'position.required' => 'Posisi pekerjaan wajib diisi.',
+            'company.required' => 'Nama perusahaan wajib diisi.',
+            'location.required' => 'Lokasi pekerjaan wajib diisi.',
+            'job_type.required' => 'Jenis pekerjaan wajib diisi.',
+            'job_type.in' => 'Jenis pekerjaan tidak valid.',
+            'description.required' => 'Deskripsi pekerjaan wajib diisi.',
+            'qualifications.required' => 'Kualifikasi pekerjaan wajib diisi.',
+            'salary_min.numeric' => 'Gaji minimum harus berupa angka.',
+            'salary_min.min' => 'Gaji minimum tidak boleh negatif.',
+            'salary_max.numeric' => 'Gaji maksimum harus berupa angka.',
+            'salary_max.gte' => 'Gaji maksimum harus lebih besar atau sama dengan gaji minimum.',
+            'application_deadline.required' => 'Batas waktu lamaran wajib diisi.',
+            'application_deadline.date' => 'Format tanggal batas lamaran tidak valid.',
+            'contact.required' => 'Kontak wajib diisi.',
+            'application_url.url' => 'URL lamaran harus berupa tautan yang valid.',
+        ]);
+    }
+    public static function validateUpdateJobVacancy($request)
+    {
+        $request->validate([
+            'position' => 'required',
+            'company' => 'required',
+            'location' => 'required',
+            'job_type' => 'required|in:Full-Time,Part-Time,Freelance,Internship',
+            'description' => 'required',
+            'qualifications' => 'required',
+            'salary_min' => 'nullable|numeric|min:0',
+            'salary_max' => 'nullable|numeric|gte:salary_min',
+            'application_deadline' => 'required|date',
+            'contact' => 'required',
+            'application_url' => 'nullable|url',
+        ], [
+            'position.required' => 'Posisi pekerjaan wajib diisi.',
+            'company.required' => 'Nama perusahaan wajib diisi.',
+            'location.required' => 'Lokasi pekerjaan wajib diisi.',
+            'job_type.required' => 'Jenis pekerjaan wajib diisi.',
+            'job_type.in' => 'Jenis pekerjaan tidak valid.',
+            'description.required' => 'Deskripsi pekerjaan wajib diisi.',
+            'qualifications.required' => 'Kualifikasi pekerjaan wajib diisi.',
+            'salary_min.numeric' => 'Gaji minimum harus berupa angka.',
+            'salary_min.min' => 'Gaji minimum tidak boleh negatif.',
+            'salary_max.numeric' => 'Gaji maksimum harus berupa angka.',
+            'salary_max.gte' => 'Gaji maksimum harus lebih besar atau sama dengan gaji minimum.',
+            'application_deadline.required' => 'Batas waktu lamaran wajib diisi.',
+            'application_deadline.date' => 'Format tanggal batas lamaran tidak valid.',
+            'contact.required' => 'Kontak wajib diisi.',
+            'application_url.url' => 'URL lamaran harus berupa tautan yang valid.',
+        ]);
+    }
 }
