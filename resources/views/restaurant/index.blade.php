@@ -17,38 +17,40 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <table class="table  table-responsive table-bordered" id="dataTable">
-                        <thead>
-                            <tr>
-                                <th> Nama Restoran</th>
-                                <th> Kategori </th>
-                                <th> Kontak </th>
-                                <th> Latitude </th>
-                                <th> Longitude </th>
-                                <th> Jam Buka </th>
-                                <th> Jam Tutup </th>
-                                <th> Alamat </th>
-                                <th> Deskripsi </th>
-                                <th> Gambar </th>
-                                <th width="100"> Aksi </th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th> Nama Restoran</th>
-                                <th> Kategori </th>
-                                <th> Kontak </th>
-                                <th> Latitude </th>
-                                <th> Longitude </th>
-                                <th> Jam Buka </th>
-                                <th> Jam Tutup </th>
-                                <th> Alamat </th>
-                                <th> Deskripsi </th>
-                                <th> Gambar </th>
-                                <th width="100"> Aksi </th>
-                            </tr>
-                        </tfoot>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable">
+                            <thead>
+                                <tr>
+                                    <th> Nama Restoran</th>
+                                    <th> Kategori </th>
+                                    <th> Kontak </th>
+                                    <th> Latitude </th>
+                                    <th> Longitude </th>
+                                    <th> Jam Buka </th>
+                                    <th> Jam Tutup </th>
+                                    <th> Alamat </th>
+                                    <th> Deskripsi </th>
+                                    <th> Gambar </th>
+                                    <th width="100"> Aksi </th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th> Nama Restoran</th>
+                                    <th> Kategori </th>
+                                    <th> Kontak </th>
+                                    <th> Latitude </th>
+                                    <th> Longitude </th>
+                                    <th> Jam Buka </th>
+                                    <th> Jam Tutup </th>
+                                    <th> Alamat </th>
+                                    <th> Deskripsi </th>
+                                    <th> Gambar </th>
+                                    <th width="100"> Aksi </th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

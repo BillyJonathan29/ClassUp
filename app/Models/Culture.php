@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Laravel\Sanctum\HasApiTokens;
 
+
 class Culture extends Model
 {
     use HasApiTokens, HasFactory;

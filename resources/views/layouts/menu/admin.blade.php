@@ -34,19 +34,19 @@
             </li>
             <li>
                 <a href="{{ route('article') }}">
-                    <i class="fas fa-theater-masks "></i>
+                    <i class="fas fa-newspaper"></i>
                     <p> Data Berita </p>
                 </a>
             </li>
             <li>
                 <a href="{{ route('company') }}">
-                    <i class="fas fa-theater-masks "></i>
+                    <i class="fas fa-building"></i>
                     <p> Data Bisnis </p>
                 </a>
             </li>
             <li>
                 <a href="{{ route('restaurant') }}">
-                    <i class="fas fa-theater-masks "></i>
+                    <i class="fas fa-utensils"></i>
                     <p> Data Restoran </p>
                 </a>
             </li>
@@ -57,11 +57,19 @@
 </li>
 
 <li class="nav-item">
+    <a href="{{ route('job-vacancy') }}">
+        <i class="fas fa-briefcase"></i>
+        <p> Lowongan Pekerjaan </p>
+    </a>
+</li>
+
+<li class="nav-item">
     <a href="{{ route('user') }}">
         <i class="fas fa-user"></i>
         <p> User </p>
     </a>
 </li>
+
 
 <li class="nav-section">
     <span class="sidebar-mini-icon">

@@ -3,15 +3,18 @@
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title> Saba | Kuningan </title>
+    <title> Keuangan | PT Adiva Sumber Solusi </title>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="_token" content="{{ csrf_token() }}">
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+    <link rel="icon" href="{{ url('img/icon_adiva.ico') }}" type="image/x-icon" />
 
-    <link href="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.css" rel="stylesheet"
-        integrity="sha384-2vMryTPZxTZDZ3GnMBDVQV8OtmoutdrfJxnDTg0bVam9mZhi7Zr3J1+lkVFRr71f" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url('vendors/ladda/ladda-themeless.min.css') }}">
+    <link rel="stylesheet" href="{{ url('vendors/jquery-confirm/jquery-confirm.css') }}">
 
+    {{-- <link rel="stylesheet" href="{{ url('vendors/select2/select2.css') }}">
+    <link rel="stylesheet" href="{{ url('css/custom/select2-atlantis.css') }}"> --}}
 
     <script src="{{ url('js/plugin/webfont/webfont.min.js') }}"></script>
     <script>
@@ -35,11 +38,10 @@
     <link rel="stylesheet" href="{{ url('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url('css/atlantis.min.css') }}">
     <link rel="stylesheet" href="{{ url('css/custom/app.css') }}">
-    <link rel="stylesheet" href="{{ url('vendors/ladda/ladda-themeless.min.css') }}">
-    <link rel="stylesheet" href="{{ url('vendors/jquery-confirm/jquery-confirm.css') }}">
 
-
-
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.css"
+        integrity="sha256-pODNVtK3uOhL8FUNWWvFQK0QoQoV3YA9wGGng6mbZ0E=" crossorigin="anonymous" />
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="{{ url('css/demo.css') }}">
@@ -58,12 +60,24 @@
             object-fit: cover;
         }
 
-        .head img {
+        /* .user-box img{
+
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+        } */
+
+        .avatar-sm img {
             border-radius: 50%;
             width: 50px;
             height: 50px;
             object-fit: cover;
         }
+
+        /* .side{
+            font-weight: bold
+        } */
 
         .mh {
             width: 100px;
@@ -91,7 +105,7 @@
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="blue">
                 <div class="avatar-sm lo">
-                    <img src="{{ url('img/default-avatar.jpg') }}" class=" mt--4 mh">
+                    <img src="{{ url('img/default-avatar.jpg') }}" alt="navbar brand" class=" mt--4 mh">
                 </div>
 
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
@@ -123,7 +137,7 @@
                         <li class="nav-item dropdown hidden-caret">
                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#"
                                 aria-expanded="false">
-                                <div class="avatar-sm">
+                                <div class="avatar-sm mb-2">
                                     <img src="{{ auth()->user()->avatarLink() }}" alt="..."
                                         class="avatar-img rounded-circle">
                                 </div>
@@ -132,12 +146,12 @@
                                 <div class="dropdown-user-scroll scrollbar-outer">
                                     <li>
                                         <div class="user-box">
-                                            <div class="avatar-lg"><img src="{{ url('img/head-meja.png') }}"
-                                                    alt="..." class="avatar-img rounded"></div>
+                                            <div class="avatar-lg"><img src="{{ auth()->user()->avatarLink() }}"
+                                                    alt="..." class="avatar-img rounded-lg"></div>
                                             <div class="u-text">
                                                 <h4>{{ Auth::user()->name }}</h4>
-                                                <p class="text-muted">{{ Auth::user()->email }}</p>
-                                                <a href="{{ route('setting.profile') }}"
+                                                <p class="text-muted">{{ Auth::user()->email }}</p><a
+                                                    href="{{ route('setting.profile') }}"
                                                     class="btn btn-xs btn-secondary btn-sm">Lihat
                                                     Profile</a>
                                             </div>
@@ -145,7 +159,7 @@
                                     </li>
                                     <li>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="{{ route('logout') }}">Logout</a>
+                                        <a class="dropdown-item " href="{{ route('logout') }}">Logout</a>
                                     </li>
                                 </div>
                             </ul>
@@ -161,14 +175,14 @@
             <div class="sidebar-wrapper scrollbar scrollbar-inner">
                 <div class="sidebar-content">
                     <div class="user">
-                        <div class="avatar-sm float-left mr-4 head">
-                            	<img src="{{ auth()->user()->avatarLink() }}" alt="..."
-										class="avatar-img rounded-circle">
+                        <div class="avatar-sm float-left mr-2">
+                            <img src="{{ auth()->user()->avatarLink() }}" alt="..."
+                                class="avatar-img rounded-circle">
                         </div>
                         <div class="info">
                             <a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
-                                <span>
-                                    <span class="user-level">{{ Auth::user()->username }}</span>
+                                <span class="pl-3 mt">
+                                    {{ Auth::user()->username }}
                                     <span class="user-level">{{ Auth::user()->role }}</span>
                                 </span>
                             </a>
@@ -219,7 +233,7 @@
             <footer class="footer">
                 <div class="container-fluid">
                     <div class="copyright ml-auto">
-                        <p class="social-text"> Copyright &copy; 2025 | <a href="" target="_blank">
+                        <p class="social-text"> Copyright &copy; 2022 | <a href="#" target="_blank">
                                 Saba Kuningan </a> . All rights reserved. </p>
                     </div>
                 </div>
@@ -230,38 +244,52 @@
 
     @yield('modal')
 
-
-
-
     <!-- LIBARARY JS -->
     <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
+    <!--   Core JS Files   -->
 
+    {{-- ON ERRORR PAGE TRANSACTIONS --}}
     <script src="{{ url('js/core/popper.min.js') }}"></script>
     <script src="{{ url('js/core/bootstrap.min.js') }}"></script>
 
+    <!-- jQuery UI -->
+    <script src="{{ url('js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
+    <script src="{{ url('js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js') }}"></script>
 
     <!-- jQuery Scrollbar -->
     <script src="{{ url('js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
 
 
+    <!-- Chart JS -->
+
+    <!-- jQuery Sparkline -->
+    <script src="{{ url('js/plugin/jquery.sparkline/jquery.sparkline.min.js') }}"></script>
+
+    <!-- Chart Circle -->
+
+    <!-- Datatables -->
+    <script src="{{ url('js/plugin/datatables/datatables.min.js') }}"></script>
+
+    <!-- Bootstrap Notify -->
     <script src="{{ url('js/plugin/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
 
+    <!-- jQuery Vector Maps -->
 
+    <!-- Sweet Alert -->
+    <script src="{{ url('js/plugin/sweetalert/sweetalert.min.js') }}"></script>
 
-    <script src="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.js"
-        integrity="sha384-2Ul6oqy3mEjM7dBJzKOck1Qb/mzlO+k/0BQv3D3C7u+Ri9+7OBINGa24AeOv5rgu" crossorigin="anonymous">
-    </script>
+    <!-- Atlantis JS komen -->
+    <script src="{{ url('js/atlantis.min.js') }}"></script>
+
 
     <script src="{{ url('vendors/ladda/spin.min.js') }}"></script>
     <script src="{{ url('vendors/ladda/ladda.min.js') }}"></script>
     <script src="{{ url('vendors/ladda/ladda.jquery.min.js') }}"></script>
     <script src="{{ url('vendors/jquery-confirm/jquery-confirm.js') }}"></script>
-
-
-
-
+    {{-- <script src="{{ url('vendors/select2/select2.min.js') }}"></script> --}}
 
     <script src="{{ url('js/myJs.js') }}"></script>
 

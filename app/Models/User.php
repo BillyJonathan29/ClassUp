@@ -163,7 +163,7 @@ class User extends Authenticatable
 							<a class="dropdown-item" href="' . route('user.edit', $data->id) . '">
 								<i class="fas fa-pencil-alt mr-1"></i> Edit
 							</a>
-							<a class="dropdown-item delete" href="javascript:void(0)" data-delete-message="Yakin ingin menghapus <strong>' . $data->name . '</strong>?" data-delete-href="' . route('user.destroy', $data->id) . '">
+							<a class="dropdown-item delete" href="javascript:void(0)" data-delete-message="Yakin ingin menghapus <strong>' . $data->username . '</strong>?" data-delete-href="' . route('user.destroy', $data->id) . '">
 								<i class="fas fa-trash mr-1"></i> Hapus
 							</a>
 						</div>
