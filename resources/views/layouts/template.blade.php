@@ -105,7 +105,7 @@
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="blue">
                 <div class="avatar-sm lo">
-                    <img src="{{ url('img/default-avatar.jpg') }}" alt="navbar brand" class=" mt--4 mh">
+                    <img src="{{ url('img/saba.png') }}" alt="navbar brand" class=" mt--4 mh">
                 </div>
 
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse"
