@@ -84,4 +84,21 @@ class RestaurantController extends Controller
             return Response::error($e);
         }
     }
+
+
+    public function getApi()
+    {
+        try {
+            $restaurants = Restaurant::all()->map(function ($restaurant) {
+                $restaurant->image = asset('storage/restaurant/' . $restaurant->image);
+                return $restaurant;
+            });
+
+            return Response::success([
+                'restaurants' => $restaurants
+            ]);
+        } catch (Exception $e) {
+            return Response::error($e);
+        }
+    }
 }

@@ -90,4 +90,21 @@ class TourController extends Controller
             return Response::error($e);
         }
     }
+
+
+    public function getApi()
+    {
+        try {
+            $tours = Tour::all()->map(function ($tour) {
+                $tour->image = asset('storage/tour_photo/' . $tour->image);
+                return $tour;
+            });
+            return Response::success([
+                'message' => 'Data semua wisata',
+                'tours' => $tours
+            ]);
+        } catch (Exception $e) {
+            return Response::error($e);
+        }
+    }
 }
