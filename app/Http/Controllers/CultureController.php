@@ -44,6 +44,7 @@ class CultureController extends Controller
         }
     }
 
+
     public function get(Culture $culture)
     {
         try {

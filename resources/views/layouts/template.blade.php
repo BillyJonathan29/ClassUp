@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title> Keuangan | PT Adiva Sumber Solusi </title>
+    <title> SABA | Kuningan  </title>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="_token" content="{{ csrf_token() }}">
