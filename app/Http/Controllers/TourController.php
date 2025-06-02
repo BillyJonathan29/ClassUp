@@ -92,7 +92,7 @@ class TourController extends Controller
     }
 
 
-    public function getApi()
+    public function getTour()
     {
         try {
             $tours = Tour::all()->map(function ($tour) {

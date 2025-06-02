@@ -89,4 +89,20 @@ class CultureController extends Controller
             return Response::error($e);
         }
     }
+
+    public function getCulture()
+    {
+        try {
+            $cultures = Culture::all()->map(function ($culture) {
+                $culture->image = asset('storage/culture/' . $culture->image);
+                return $culture;
+            });
+            return Response::success([
+                'message' => 'Data semua budaya',
+                'cultures' => $cultures
+            ]);
+        } catch (Exception $e) {
+            return Response::error($e);
+        }
+    }
 }

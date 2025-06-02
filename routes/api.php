@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CultureController;
+use App\Http\Controllers\JobVacancyController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\TourController;
+use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +32,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::post('/auth/register', [AuthController::class, 'register']);
 Route::post('/auth/login', [AuthController::class, 'login']);
-Route::get('/tour', [TourController::class, 'getApi']);
-
-Route::get('/restaurant/get', [RestaurantController::class, 'getApi']);
+Route::get('/tour', [TourController::class, 'getTour']);
+Route::get('/restaurant', [RestaurantController::class, 'getRestaurant']);
+Route::get('/culture', [CultureController::class, 'getCulture']);
+Route::get('/article', [ArticleController::class, 'getArticle']);
+Route::get('/job-vacancy', [JobVacancyController::class, 'getJobVacancy']);

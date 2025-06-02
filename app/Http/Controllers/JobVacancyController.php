@@ -101,4 +101,20 @@ class JobVacancyController extends Controller
             return Response::error($e);
         }
     }
+
+    public function getJobVacancy()
+    {
+        try {
+            $jobVacancy = JobVacancy::all()->map(function ($jobVacancy) {
+                $jobVacancy->image = asset('storage/job_vacancy/' . $jobVacancy->image);
+                return $jobVacancy;
+            });
+            return Response::success([
+                'message' => 'Data Semua lowongan pekerjaan',
+                'jobVacancy' => $jobVacancy
+            ]);
+        } catch (Exception $e) {
+            return Response::error($e);
+        }
+    }
 }

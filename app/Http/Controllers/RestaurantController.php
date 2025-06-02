@@ -86,7 +86,8 @@ class RestaurantController extends Controller
     }
 
 
-    public function getApi()
+
+    public function getRestaurant()
     {
         try {
             $restaurants = Restaurant::all()->map(function ($restaurant) {
