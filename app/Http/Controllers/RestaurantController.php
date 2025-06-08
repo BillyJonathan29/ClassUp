@@ -91,7 +91,7 @@ class RestaurantController extends Controller
     {
         try {
             $restaurants = Restaurant::all()->map(function ($restaurant) {
-                $restaurant->image = asset('storage/restaurant/' . $restaurant->image);
+                $restaurant->image = url('storage/restaurant/' . $restaurant->image);
                 return $restaurant;
             });
 

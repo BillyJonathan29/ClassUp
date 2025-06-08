@@ -91,7 +91,7 @@ class ArticleController extends Controller
     {
         try {
             $articles = Article::all()->map(function ($article) {
-                $article->image = asset('storage/article/' . $article->image);
+                $article->image = url('storage/article/' . $article->image);
                 return $article;
             });
             return Response::success([

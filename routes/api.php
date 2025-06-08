@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContentController;
 use App\Http\Controllers\CultureController;
 use App\Http\Controllers\JobVacancyController;
 use App\Http\Controllers\RestaurantController;
@@ -37,3 +38,6 @@ Route::get('/restaurant', [RestaurantController::class, 'getRestaurant']);
 Route::get('/culture', [CultureController::class, 'getCulture']);
 Route::get('/article', [ArticleController::class, 'getArticle']);
 Route::get('/job-vacancy', [JobVacancyController::class, 'getJobVacancy']);
+
+Route::get('/content', [ContentController::class, 'getContent']);
+

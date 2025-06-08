@@ -106,7 +106,7 @@ class JobVacancyController extends Controller
     {
         try {
             $jobVacancy = JobVacancy::all()->map(function ($jobVacancy) {
-                $jobVacancy->image = asset('storage/job_vacancy/' . $jobVacancy->image);
+                $jobVacancy->image =    url('storage/job_vacancy/' . $jobVacancy->image);
                 return $jobVacancy;
             });
             return Response::success([

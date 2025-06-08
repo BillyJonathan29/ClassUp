@@ -94,7 +94,7 @@ class CultureController extends Controller
     {
         try {
             $cultures = Culture::all()->map(function ($culture) {
-                $culture->image = asset('storage/culture/' . $culture->image);
+                $culture->image = url('storage/culture/' . $culture->image);
                 return $culture;
             });
             return Response::success([
