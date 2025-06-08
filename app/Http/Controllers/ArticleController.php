@@ -86,4 +86,20 @@ class ArticleController extends Controller
             return Response::error($e);
         }
     }
+
+    public function getArticle()
+    {
+        try {
+            $articles = Article::all()->map(function ($article) {
+                $article->image = url('storage/article/' . $article->image);
+                return $article;
+            });
+            return Response::success([
+                'message' => 'Data semua berita',
+                'articles' => $articles
+            ]);
+        } catch (Exception $e) {
+            return Response::error($e);
+        }
+    }
 }

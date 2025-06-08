@@ -92,11 +92,11 @@ class TourController extends Controller
     }
 
 
-    public function getApi()
+    public function getTour()
     {
         try {
             $tours = Tour::all()->map(function ($tour) {
-                $tour->image = asset('storage/tour_photo/' . $tour->image);
+                $tour->image = url('storage/tour_photo/' . $tour->image);
                 return $tour;
             });
             return Response::success([

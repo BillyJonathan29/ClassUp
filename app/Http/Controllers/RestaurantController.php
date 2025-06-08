@@ -86,11 +86,12 @@ class RestaurantController extends Controller
     }
 
 
-    public function getApi()
+
+    public function getRestaurant()
     {
         try {
             $restaurants = Restaurant::all()->map(function ($restaurant) {
-                $restaurant->image = asset('storage/restaurant/' . $restaurant->image);
+                $restaurant->image = url('storage/restaurant/' . $restaurant->image);
                 return $restaurant;
             });
 
