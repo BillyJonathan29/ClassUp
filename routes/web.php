@@ -37,7 +37,9 @@ Route::middleware('guest')->group(function () {
     Route::post('login', [LoginController::class, 'authenticate'])->name('login.authenticate');
 });
 
-Route::middleware('auth')->group(function () {
+
+
+Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::get('logout', [LoginController::class, 'logout'])->name('logout');
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 

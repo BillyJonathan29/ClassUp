@@ -21,22 +21,25 @@ class LoginController extends Controller
         Validations::login($request);
         DB::beginTransaction();
         try {
-            $credentials = $request->only(['username', 'password']);
+            $credentials = $request->only(['email', 'password']);
+
             if (Auth::attempt($credentials)) {
-                $user = $request->user();
-                // $tokenResult = $user->createToken('Token login');
-                // $token  = $tokenResult->plainToken;
+                $user = Auth::user();
+
+                if ($user->role !== 'Admin') {
+                    Auth::logout();
+                    return Response::invalid([
+                        'message' => 'Akses ditolak. Hanya role admin yang bisa akses halaman ini.',
+                    ]);
+                }
+
                 DB::commit();
                 return Response::success([
-                    'message' => 'Login berhasil',
-                    // 'data' => [
-                    //     'token' => $token
-                    // ]
+                    'message' => 'Login berhasil sebagai admin',
                 ]);
             } else {
                 return Response::invalid([
-                    'message' => 'Username atau password salah',
-                    // 'code' => 422
+                    'message' => 'Gmail atau password salah',
                 ]);
             }
         } catch (Exception $e) {
@@ -44,6 +47,8 @@ class LoginController extends Controller
             return Response::error($e);
         }
     }
+
+
 
     public function logout(Request $request)
     {

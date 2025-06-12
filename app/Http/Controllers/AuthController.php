@@ -14,23 +14,24 @@ use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
-
     public function register(Request $request)
     {
         Validations::register($request);
+
         DB::beginTransaction();
         try {
+            // Buat user
             $user = User::createUser($request->all());
+
             DB::commit();
+
             return Response::success([
-                'message' => 'User berhasil di tambahkan',
+                'message' => 'User berhasil ditambahkan',
                 'data' => [
-                    'username' => $request->username,
-                    'email' => $request->email,
-                    'password' => $request->password,
-                    'role' => $request->role
-                ],
-                'code' => 200
+                    'username' => $user->username,
+                    'email' => $user->email,
+                    'role' => $user->role,
+                ]
             ]);
         } catch (Exception $e) {
             DB::rollBack();
@@ -39,12 +40,13 @@ class AuthController extends Controller
     }
 
 
+
     public function login(Request $request)
     {
         Validations::login($request);
         DB::beginTransaction();
         try {
-            $credentials = $request->only(['username', 'password']);
+            $credentials = $request->only(['email', 'password']);
             if (Auth::attempt($credentials)) {
                 $user = $request->user();
                 $token = $user->createToken('Token Login')->plainTextToken;

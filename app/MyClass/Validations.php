@@ -11,10 +11,10 @@ class Validations
     public static function login($request)
     {
         $request->validate([
-            'username' => 'required|string',
+            'email' => 'required|email',
             'password' => 'required'
         ], [
-            'username.required' => 'Username wajib diisi',
+            'email.required' => 'Email wajib diisi',
             'password.required' => 'Password wajib diisi',
         ]);
     }
@@ -25,13 +25,12 @@ class Validations
             'username' => 'required|string',
             'email' => 'required|unique:users,email',
             'password' => 'required|min:8|max:12',
-            'role' => 'required|in:Admin,User',
+            'role' => 'in:Admin,User',
         ], [
             'username.required' => 'Username wajib diisi',
             'email.required' => 'Email wajib diisi',
             'email.unique' => 'Email sudah digunakan',
             'password.required' => 'Password wajib diisi',
-            'role.required' => 'Role wajib diisi',
             'role.in' => 'Role tidak valid',
         ]);
     }

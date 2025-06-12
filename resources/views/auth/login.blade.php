@@ -72,9 +72,9 @@
                 <form action="{{ route('login.authenticate') }}" method="POST" id="formLogin">
                     @csrf
                     <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" name="username" class="form-control" id="username"
-                            placeholder="Masukkan username" required>
+                        <label for="email">Gmail</label>
+                        <input type="text" name="email" class="form-control" id="email"
+                            placeholder="Masukkan email" required>
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
@@ -123,8 +123,9 @@
                     }, 1000);
                 }).fail(error => {
                     $formLoginSubmitBtn.ladda('stop');
-                    errorNotification('Error', 'Username atau password salah');
-                    $('.message-error').html('Username atau password salah');
+                    const message = error.responseJSON?.message || 'Gmail atau password salah';
+                    errorNotification('Gagal', message);
+                    $('.message-error').html(message);
                 });
             });
         });

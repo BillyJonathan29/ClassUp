@@ -43,7 +43,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Article::class, 'created_by');
     }
-    public function companies(){
+    public function companies()
+    {
         return $this->hasMany(Company::class, 'created_by');
     }
     public function restaurants()
@@ -73,10 +74,21 @@ class User extends Authenticatable
 
     public static function createUser($request)
     {
-        $user = self::create($request);
-        $user->setPassword($request['password']);
-        return $user;
+        // $user = self::create($request);
+        // $user->setPassword($request['password']);
+        // return $user;
+
+        $data = $request;
+
+        if (!isset($data['role']) || empty($data['role'])) {
+            $data['role'] = 'User';
+        }
+
+        $data['password'] = Hash::make($data['password']);
+
+        return self::create($data);
     }
+
 
     public function updateUser($request)
     {

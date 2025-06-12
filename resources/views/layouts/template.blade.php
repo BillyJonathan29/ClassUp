@@ -233,7 +233,7 @@
             <footer class="footer">
                 <div class="container-fluid">
                     <div class="copyright ml-auto">
-                        <p class="social-text"> Copyright &copy; 2022 | <a href="#" target="_blank">
+                        <p class="social-text"> Copyright &copy; 2025 | <a href="#" target="_blank">
                                 Saba Kuningan </a> . All rights reserved. </p>
                     </div>
                 </div>
@@ -247,6 +247,8 @@
     <!-- LIBARARY JS -->
     <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
 
     <!--   Core JS Files   -->

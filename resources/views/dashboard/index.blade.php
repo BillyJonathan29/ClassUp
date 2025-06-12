@@ -25,7 +25,7 @@
                             <div class="col-7 col-stats">
                                 <div class="numbers">
                                     <p class="card-category"> Total User </p>
-                                    {{-- <h4 class="card-title"> {{ \App\Models\Transaction::totalIncomeFormatted() }} </h4> --}}
+                                    <h4 class="card-title"> {{ $totalUser }} </h4>
                                 </div>
                             </div>
                         </div>
@@ -43,8 +43,8 @@
                             </div>
                             <div class="col-7 col-stats">
                                 <div class="numbers">
-                                    <p class="card-category"> Total Wisata  </p>
-                                    {{-- <h4 class="card-title"> {{ \App\Models\Transaction::totalExpenseFormatted() }} </h4> --}}
+                                    <p class="card-category"> Total Wisata </p>
+                                    <h4 class="card-title"> {{ $totalWisata }} </h4>
                                 </div>
                             </div>
                         </div>
@@ -64,7 +64,7 @@
                             <div class="col-7 col-stats">
                                 <div class="numbers">
                                     <p class="card-category"> Lowongan pekerjaan </p>
-                                    {{-- <h4 class="card-title"> {!! \App\Models\Transaction::totalBalanceFormattedHtml() !!} </h4> --}}
+                                    <h4 class="card-title"> {{ $totalLoker }} </h4>
                                 </div>
                             </div>
                         </div>
@@ -73,50 +73,10 @@
             </div>
         </div>
 
-        {{-- <div class="row">
-            <div class="col-lg-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">
-                            <span class="d-inline-block">
-                                Rekap Pemasukan dan Pengeluaran Per Grup Transaksi
-                            </span>
-                        </h4>
-                    </div>
 
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-hover dt">
-                                <thead>
-                                    <tr>
-                                        <th> Grup Transaksi </th>
-                                        <th> Pemasukan </th>
-                                        <th> Pengeluaran </th>
-                                        <th> Saldo </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse(auth()->user()->getTransactionGroups() as $group)
-                                        <tr>
-                                            <td>
-                                                <b> {{ $group->transaction_group_name }} </b>
-                                            </td>
-                                            <td class="text-success"> {{ $group->totalIncomeFormatted() }} </td>
-                                            <td class="text-danger"> {{ $group->totalExpenseFormatted() }} </td>
-                                            <td> {!! $group->totalBalanceFormattedHtml() !!} </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="4" align="center"> Kosong </td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
+
+        <canvas id="userLineChart" width="400" height="150"></canvas>
+        <canvas id="lokerBarChart" width="400" height="150"></canvas>
 
 
     </div>
@@ -128,5 +88,40 @@
         $(function() {
             $('#dataTable').DataTable();
         })
+
+        // Line Chart - User per bulan
+        const userLineCtx = document.getElementById('userLineChart');
+        new Chart(userLineCtx, {
+            type: 'line',
+            data: {
+                labels: {!! json_encode(
+                    array_values($userPerMonth->keys()->map(fn($b) => \Carbon\Carbon::create()->month($b)->format('F'))->toArray()),
+                ) !!},
+                datasets: [{
+                    label: 'User Mendaftar per Bulan',
+                    data: {!! json_encode(array_values($userPerMonth->toArray())) !!},
+                    borderColor: 'blue',
+                    tension: 0.3,
+                    fill: false
+                }]
+            }
+        });
+
+        // Bar Chart - Jenis Loker
+        const lokerBarCtx = document.getElementById('lokerBarChart');
+        new Chart(lokerBarCtx, {
+            type: 'bar',
+            data: {
+                labels: {!! json_encode($jenisLoker->keys()) !!},
+                datasets: [{
+                    label: 'Jumlah Lowongan',
+                    data: {!! json_encode($jenisLoker->values()) !!},
+                    backgroundColor: '#3a37ed'
+                }]
+            },
+            options: {
+                indexAxis: 'y'
+            }
+        });
     </script>
 @endsection
